@@ -44,7 +44,7 @@ public class Database {
                 val = false;
             }
 
-
+            //Hashes the passed in value
             pass = hashed.hashStringSHA256(pass);
             resultSet.beforeFirst();
             while (resultSet.next()) {
