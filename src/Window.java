@@ -5,7 +5,7 @@ public class Window extends JFrame {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double screenwidth;
     double screenheight;
-    static JComponent currentScreen; // Use to keep track of current displayed screen
+    static JComponent currentScreen = null; // Use to keep track of current displayed screen
 
     public Window(){
 
@@ -27,7 +27,8 @@ public class Window extends JFrame {
 
     //This method will change the current displayed Panel of the Window class
     public void setScreen(JComponent currentScreen){
-        this.remove(currentScreen);
+        if(!(this.currentScreen==null))
+            this.remove(this.currentScreen);
         this.currentScreen=currentScreen;
         this.validate();
         this.repaint();

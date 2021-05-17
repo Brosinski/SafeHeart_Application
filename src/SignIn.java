@@ -230,9 +230,9 @@ public void signIn(AWTEvent e) {
         JOptionPane.showMessageDialog(f,"Wrong credentials");
     }
     else if(dude == true){
-        JOptionPane.showMessageDialog(f,"CORRECT credentials");
+        JOptionPane.showMessageDialog(f,"Logging in...");
         try {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.MILLISECONDS.sleep(200);
 
         }
 
@@ -240,6 +240,8 @@ public void signIn(AWTEvent e) {
             System.out.println("Unknown error");
 
         }
+        Window mainWind = (Window) f;
+        mainWind.setScreen(new patientGUI());
         }
     }
 }

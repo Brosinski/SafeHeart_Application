@@ -1,4 +1,3 @@
-import javax.swing.*;
 
 public class Main {
     static char currentwindow;   // Use to keep track of current displayed screen
@@ -12,16 +11,16 @@ public class Main {
 
         }
     public static class Controller {
-        public void changeScreen(char windowset) {
+        public void changeScreen(char windowSet) {
 
             switch (currentwindow) {
                 case 'S':
                     window.setScreen(new SignIn());
-                    currentwindow= windowset;
+                    currentwindow= windowSet;
                     
                 case 'P':
                     window.setScreen(new patientGUI());
-                    currentwindow= windowset;
+                    currentwindow= windowSet;
             }
 
         }
