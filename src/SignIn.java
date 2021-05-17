@@ -1,12 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.concurrent.TimeUnit;
 
 public class SignIn extends JPanel {
 
@@ -35,7 +35,7 @@ public class SignIn extends JPanel {
     private JPasswordField password;
     private JTextField email;
     JPanel loginBut;
-
+    Database db = new Database();
     public SignIn() {
 
         this.setLayout(new GridLayout(1, 2, 0, 0));
@@ -147,7 +147,7 @@ public class SignIn extends JPanel {
         loginBut.add(signPanel);
         loginBut.add(regPanel);
         loginBut.setBackground(Color.WHITE);
-        Database db = new Database();
+
         ActionListener listener;
 
         listener = new ActionListener(){
@@ -156,18 +156,10 @@ public class SignIn extends JPanel {
 
                 if(e.getSource()==signButton) {
 
-                    boolean dude =db.confirmCredentials(email.getText(),new String(password.getPassword()));
-                    Component comp = (Component) e.getSource();
-                    JFrame f =(JFrame) SwingUtilities.getRoot(comp);
-                    if(dude == false) {
-
-                        JOptionPane.showMessageDialog(f,"Wrong credentials");
-                    }
-                    else if(dude == true){
-                        JOptionPane.showMessageDialog(f,"CORRECT credentials");
-                    }
+                    signIn(e);
                 }
                 else if(e.getSource()==regButton) {
+
                     String code1=JOptionPane.showInputDialog("Enter Code for Registration");
                     if(code1.equals(code)) {
                         db.sendCredentials(email.getText(),new String(password.getPassword()));
@@ -185,9 +177,28 @@ public class SignIn extends JPanel {
 
 
         };
+        KeyListener keyListener = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyChar()== KeyEvent.VK_ENTER) {
+                    signIn(e);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        };
         signButton.addActionListener(listener);
         regButton.addActionListener(listener);
-
+        password.addKeyListener(keyListener);
+        email.addKeyListener(keyListener);
         login.add(loginBut);
         loginBut.add(signPanel);
         loginBut.add(regPanel);
@@ -208,5 +219,28 @@ public class SignIn extends JPanel {
 
 
     }
+public void signIn(AWTEvent e) {
 
+
+    boolean dude =db.confirmCredentials(email.getText(),new String(password.getPassword()));
+    Component comp = (Component) e.getSource();
+    JFrame f =(JFrame) SwingUtilities.getRoot(comp);
+    if(dude == false) {
+
+        JOptionPane.showMessageDialog(f,"Wrong credentials");
+    }
+    else if(dude == true){
+        JOptionPane.showMessageDialog(f,"CORRECT credentials");
+        try {
+            TimeUnit.SECONDS.sleep(2);
+
+        }
+
+        catch (Exception E){
+            System.out.println("Unknown error");
+
+        }
+        }
+    }
 }
+
