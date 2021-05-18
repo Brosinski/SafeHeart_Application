@@ -95,6 +95,7 @@ public class Database {
                 System.out.println("Failed to insert");
                 e.printStackTrace();
                 return false;
+
         }
         return true;
     }
