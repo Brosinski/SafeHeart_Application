@@ -15,6 +15,7 @@ public class patientGUI extends JPanel {
 
         this.setLayout(new GridLayout(1,1));
         this.add(mainPanel);
+
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

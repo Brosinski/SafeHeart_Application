@@ -9,33 +9,53 @@ import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
 
 public class SignIn extends JPanel {
-
-    private boolean regFlag =false;
+    //No form was used for this code, hence the absolute chaos.
+    private boolean regFlag =false;  JLabel titleLable2;
+    JLabel passText;
+    JLabel passText2;
+    JLabel displayImage;
+    JLabel emailText;
+    JLabel loginImage;
+    JLabel firstText;
+    JLabel familyText;
     JPanel titleLogo;
+    JPanel titleRegister;
     JLabel titleLable;
-    JLabel titleLable2;
     JPanel titleWelcome;
     JPanel filler;
     JPanel filler2;
-    JLabel loginImage;
-    JLabel displayImage;
     JPanel logInformation;
     JPanel emailBox;
-    JLabel emailText;
     JPanel passwordBox;
+    JPanel passwordBox2;
     JPanel signPanel;
     JPanel regPanel;
     JPanel login;
+    JPanel loginReg;
     JPanel titleText;
+    JPanel loginBut;
+    JPanel registerTop;
+    JPanel firstNameBox;
+    JPanel familyNameBox;
+    JPanel userTypeBox;
+    KeyListener keyListener;
+    KeyListener keyListener2;
+    JRadioButton clinician;
+    JRadioButton patient;
     final String code="x5DeB";
-    JLabel passText;
     final JButton signButton =new JButton("Sign in");
     final JButton regButton = new JButton("Register");
-    JLabel register;
+    final JButton backButton = new JButton("Back");
     private JPasswordField password;
+    private JPasswordField password2;
     private JTextField email;
-    JPanel loginBut;
+    private JTextField firstName;
+    private JTextField familyName;
+    Component comp;
+    JFrame f;
+
     Database db = new Database();
+    GridBagConstraints c= new GridBagConstraints();
     public SignIn() {
 
         this.setLayout(new GridLayout(1, 2, 0, 0));
@@ -71,7 +91,7 @@ public class SignIn extends JPanel {
         emailBox = new JPanel();
         emailBox.setLayout(new GridBagLayout());
         emailBox.setBackground(Color.WHITE);
-        GridBagConstraints c= new GridBagConstraints();
+
         emailText = new JLabel("Email:");
 
         emailText.setFont(new Font("Verdana",Font.BOLD,15));
@@ -162,7 +182,8 @@ public class SignIn extends JPanel {
 
                     String code1=JOptionPane.showInputDialog("Enter Code for Registration");
                     if(code1.equals(code)) {
-                        db.sendCredentials(email.getText(),new String(password.getPassword()));
+                        startRegScreen();
+
 
                     }
                     else {
@@ -177,7 +198,7 @@ public class SignIn extends JPanel {
 
 
         };
-        KeyListener keyListener = new KeyListener() {
+        keyListener = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -223,8 +244,8 @@ public void signIn(AWTEvent e) {
 
 
     boolean dude =db.confirmCredentials(email.getText(),new String(password.getPassword()));
-    Component comp = (Component) e.getSource();
-    JFrame f =(JFrame) SwingUtilities.getRoot(comp);
+    comp = (Component) e.getSource();
+    f=(JFrame) SwingUtilities.getRoot(comp);
     JOptionPane jj = new JOptionPane();
     if(dude == false) {
         jj.showMessageDialog(f,"Wrong credentials");
@@ -236,5 +257,214 @@ public void signIn(AWTEvent e) {
         mainWind.setWindow(new patientGUI());
         }
     }
-}
+
+
+
+    public void startRegScreen(){
+        this.remove(titleLogo);
+        this.remove(displayImage);
+
+        titleRegister=new JPanel();
+        titleRegister.setLayout(new GridLayout(2,1,10,10));
+        titleRegister.setBackground(Color.white);
+
+        registerTop = new JPanel();
+        registerTop.setLayout(new GridLayout(4,1,10,10));
+        registerTop.setBackground(Color.white);
+        titleLable2 = new JLabel("Register",SwingConstants.CENTER);
+        titleLable2.setFont(new Font("Verdana",Font.BOLD,15));
+        registerTop.add(titleLable2);
+        firstNameBox = new JPanel();
+        familyNameBox = new JPanel();
+        userTypeBox = new JPanel();
+        firstNameBox.setLayout(new GridBagLayout());
+        familyNameBox.setLayout(new GridBagLayout());
+        userTypeBox.setLayout(new FlowLayout());
+        firstNameBox.setBackground(Color.white);
+        familyNameBox.setBackground(Color.white);
+
+        userTypeBox.setBackground(Color.WHITE);
+        patient = new JRadioButton("Patient");
+        clinician = new JRadioButton("Clinician");
+        ButtonGroup selection = new ButtonGroup();
+        selection.add(patient);
+        selection.add(clinician);
+        userTypeBox.add(patient);
+        userTypeBox.add(clinician);
+
+        firstText = new JLabel("First Name:");
+        familyText= new JLabel("Second Name:");
+        firstText.setFont(new Font("Verdana",Font.BOLD,15));
+        familyText.setFont(new Font("Verdana",Font.BOLD,15));
+        c.fill = GridBagConstraints.PAGE_START;
+        c.gridx =3;
+        c.gridy = 0;
+        firstNameBox.add(firstText,c);
+        firstName = new JTextField(SwingConstants.LEFT);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx=3;
+        c.gridy = 1;
+        c.gridwidth= 3;
+        c.ipadx =200;
+
+
+
+        c.insets=new Insets(5,0,0,0);
+        firstNameBox.add(firstName,c);
+        filler = new JPanel();
+        filler.setBackground(Color.WHITE);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx=4;
+        c.gridwidth = 2;
+        c.gridy= 3;
+
+
+        firstNameBox.add(filler,c);
+
+        c.fill = GridBagConstraints.PAGE_START;
+        c.gridx =3;
+        c.gridy = 0;
+        familyNameBox.add(familyText,c);
+
+        familyName = new JTextField(SwingConstants.LEFT);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx=3;
+        c.gridy = 1;
+        c.gridwidth= 3;
+        c.ipadx =200;
+
+
+
+        c.insets=new Insets(5,0,0,0);
+        familyNameBox.add(familyName,c);
+        filler = new JPanel();
+        filler.setBackground(Color.WHITE);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx=4;
+        c.gridwidth = 2;
+        c.gridy= 3;
+
+
+        familyNameBox.add(filler,c);
+
+        registerTop.add(titleLable2);
+        registerTop.add(firstNameBox);
+        registerTop.add(familyNameBox);
+        registerTop.add(userTypeBox);
+
+
+        titleRegister.add(registerTop);
+
+
+
+
+        //Bottom half of titleRegister
+
+
+        loginReg = new JPanel();
+        loginReg.setBackground(Color.white);
+        loginReg.setLayout(new GridLayout(4,1,0,0));
+
+        passwordBox2 = new JPanel();
+        passwordBox2.setLayout(new GridBagLayout());
+        passwordBox2.setBackground(Color.WHITE);
+        passText2 = new JLabel("Confirm Password:");
+
+        passText2.setFont(new Font("Verdana",Font.BOLD,15));
+        c.fill = GridBagConstraints.PAGE_START;
+        c.gridx =3;
+        c.gridy = 0;
+        passwordBox2.add(passText2,c);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx=3;
+        c.gridy = 1;
+        c.gridwidth= 3;
+        c.ipadx =200;
+
+
+
+        c.insets=new Insets(5,0,0,0);
+        password2 = new JPasswordField(SwingConstants.LEFT);
+        passwordBox2.add(password2,c);
+        filler = new JPanel();
+        filler.setBackground(Color.WHITE);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx=4;
+        c.gridwidth = 2;
+        c.gridy= 3;
+        passwordBox2.add(filler,c);
+        password2.addKeyListener(keyListener);
+
+
+        loginReg.add(emailBox);
+        loginReg.add(passwordBox);
+        loginReg.add(passwordBox2);
+        regPanel.add(backButton);
+        loginReg.add(regPanel);
+        titleWelcome.remove(titleLable2);
+        titleWelcome.remove(titleLogo);
+
+
+        titleRegister.add(loginReg);
+
+        ActionListener listener;
+
+        listener = new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                comp = (Component) e.getSource();
+                f =(JFrame) SwingUtilities.getRoot(comp);
+
+                if(e.getSource()==backButton) {
+                    Window mainWind = (Window) f;
+                    mainWind.setWindow(new SignIn());
+
+                }
+                else if(e.getSource()==regButton) {
+
+                    String code1=JOptionPane.showInputDialog("Enter Code for Registration");
+                    if(code1.equals(code)) {
+                        //ENTER DATABASE METHOD FOR REGISTERING USER
+
+
+                    }
+                    else {
+                        comp = (Component) e.getSource();
+                         f =(JFrame) SwingUtilities.getRoot(comp);
+                        JOptionPane.showMessageDialog(f,"Wrong credentials");
+
+                    }
+                }
+
+            }
+
+
+
+        };
+        backButton.addActionListener(listener);
+        keyListener2 = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyChar()== KeyEvent.VK_ENTER) {
+                    //Call the register method from database
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        };
+        this.add(titleRegister);
+        this.add(displayImage);
+        this.validate();
+        this.repaint();
+        this.setVisible(true);
+    }
+    }
+
 
