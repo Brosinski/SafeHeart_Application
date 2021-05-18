@@ -45,6 +45,7 @@ public class SignIn extends JPanel {
     final String code="x5DeB";
     final JButton signButton =new JButton("Sign in");
     final JButton regButton = new JButton("Register");
+    final JButton createButton = new JButton("Create Account");
     final JButton backButton = new JButton("Back");
     private JPasswordField password;
     private JPasswordField password2;
@@ -265,7 +266,7 @@ public void signIn(AWTEvent e) {
         this.remove(displayImage);
 
         titleRegister=new JPanel();
-        titleRegister.setLayout(new GridLayout(2,1,10,10));
+        titleRegister.setLayout(new GridLayout(2,1,0,10));
         titleRegister.setBackground(Color.white);
 
         registerTop = new JPanel();
@@ -300,17 +301,20 @@ public void signIn(AWTEvent e) {
         c.gridx =3;
         c.gridy = 0;
         firstNameBox.add(firstText,c);
+        familyNameBox.add(familyText,c);
+
         firstName = new JTextField(SwingConstants.LEFT);
+        familyName = new JTextField(SwingConstants.LEFT);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx=3;
         c.gridy = 1;
         c.gridwidth= 3;
         c.ipadx =200;
-
-
-
         c.insets=new Insets(5,0,0,0);
         firstNameBox.add(firstName,c);
+        familyNameBox.add(familyName,c);
+
+
         filler = new JPanel();
         filler.setBackground(Color.WHITE);
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -320,32 +324,10 @@ public void signIn(AWTEvent e) {
 
 
         firstNameBox.add(filler,c);
-
-        c.fill = GridBagConstraints.PAGE_START;
-        c.gridx =3;
-        c.gridy = 0;
-        familyNameBox.add(familyText,c);
-
-        familyName = new JTextField(SwingConstants.LEFT);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx=3;
-        c.gridy = 1;
-        c.gridwidth= 3;
-        c.ipadx =200;
-
-
-
-        c.insets=new Insets(5,0,0,0);
-        familyNameBox.add(familyName,c);
-        filler = new JPanel();
-        filler.setBackground(Color.WHITE);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx=4;
-        c.gridwidth = 2;
-        c.gridy= 3;
-
-
         familyNameBox.add(filler,c);
+
+
+
 
         registerTop.add(titleLable2);
         registerTop.add(firstNameBox);
@@ -400,6 +382,8 @@ public void signIn(AWTEvent e) {
         loginReg.add(passwordBox);
         loginReg.add(passwordBox2);
         regPanel.add(backButton);
+        regPanel.remove(regButton);
+        regPanel.add(createButton);
         loginReg.add(regPanel);
         titleWelcome.remove(titleLable2);
         titleWelcome.remove(titleLogo);
@@ -440,6 +424,7 @@ public void signIn(AWTEvent e) {
 
 
         };
+        createButton.addActionListener(listener);
         backButton.addActionListener(listener);
         keyListener2 = new KeyListener() {
             @Override

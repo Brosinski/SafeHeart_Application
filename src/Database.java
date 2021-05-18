@@ -45,13 +45,13 @@ public class Database {
             }
 
             //Hashes the passed in value
-            pass = hashed.hashStringSHA256(pass);
+            pass = hashed.hashStringSHA256(pass);         //Hashes password and compares it to one associated with entered email.
             resultSet.beforeFirst();
             while (resultSet.next()) {
                 String password =resultSet.getString("password");
-                if (password.equals(pass)) {
+                if (password.equals(pass)) {         //Returns true if password is correct
                     val = true;
-                    System.out.println("Password was correct");
+
                 } else if (!password.equals(pass)) {
                     val = false;
 
@@ -59,7 +59,7 @@ public class Database {
                     System.out.println(password);
 
 
-                    System.out.println("This didnt work");
+
                 }
 
             }
