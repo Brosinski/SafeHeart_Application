@@ -225,23 +225,15 @@ public void signIn(AWTEvent e) {
     boolean dude =db.confirmCredentials(email.getText(),new String(password.getPassword()));
     Component comp = (Component) e.getSource();
     JFrame f =(JFrame) SwingUtilities.getRoot(comp);
+    JOptionPane jj = new JOptionPane();
     if(dude == false) {
-
-        JOptionPane.showMessageDialog(f,"Wrong credentials");
+        jj.showMessageDialog(f,"Wrong credentials");
     }
     else if(dude == true){
-        JOptionPane.showMessageDialog(f,"Logging in...");
-        try {
-            TimeUnit.MILLISECONDS.sleep(200);
-
-        }
-
-        catch (Exception E){
-            System.out.println("Unknown error");
-
-        }
+        jj.showMessageDialog(f,"Logged in!");
+        
         Window mainWind = (Window) f;
-        mainWind.setScreen(new patientGUI());
+        mainWind.setWindow(new patientGUI());
         }
     }
 }

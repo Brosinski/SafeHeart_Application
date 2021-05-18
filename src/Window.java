@@ -26,7 +26,7 @@ public class Window extends JFrame {
     }
 
     //This method will change the current displayed Panel of the Window class
-    public void setScreen(JComponent currentScreen){
+    public void setWindow(JComponent currentScreen){
         if(!(this.currentScreen==null))
             this.remove(this.currentScreen);
         this.currentScreen=currentScreen;

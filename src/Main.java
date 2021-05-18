@@ -6,23 +6,12 @@ public class Main {
     public static void main(String[] args) {
 
 
-        window.setScreen(new SignIn());
+        window.setWindow(new SignIn());
         currentwindow = 'S';
 
         }
-    public static class Controller {
-        public void changeScreen(char windowSet) {
 
-            switch (currentwindow) {
-                case 'S':
-                    window.setScreen(new SignIn());
-                    currentwindow= windowSet;
-                    
-                case 'P':
-                    window.setScreen(new patientGUI());
-                    currentwindow= windowSet;
-            }
 
-        }
-    }
 }
+
+
