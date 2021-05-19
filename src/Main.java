@@ -9,7 +9,7 @@ public class Main {
         Database db = new Database();
         db.createUser("cameronholm982@gmail.com","October","Cameron","Holm");
 
-
+        new Window().setWindow(new recommendationsGUI());
         window.setWindow(new SignIn());
         currentwindow = 'S';
 
