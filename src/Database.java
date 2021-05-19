@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.sql.DataSource;
 
 public class Database {
@@ -84,7 +85,7 @@ public class Database {
                     statement = connect.createStatement();
 
 
-                    PreparedStatement preparedStatement = connect.prepareStatement("insert into (Pat_Email, Pat_ID)" + "values(?,?)");
+                    PreparedStatement preparedStatement = connect.prepareStatement("insert into Patient(Pat_Email, Pat_ID)" + "values(?,?)");
                     preparedStatement.setString(1, email);
                     preparedStatement.setInt(2, id);
                     preparedStatement.execute();
@@ -121,7 +122,7 @@ public class Database {
                     statement = connect.createStatement();
 
 
-                    PreparedStatement preparedStatement = connect.prepareStatement("insert into (Clin_Email, Clin_ID, Clin_Type)" + "values(?,?,?)");
+                    PreparedStatement preparedStatement = connect.prepareStatement("insert into Clinicianggggggggg (Clin_Email, Clin_ID, Clin_Type)" + "values(?,?,?)");
                     preparedStatement.setString(1, email);
                     preparedStatement.setInt(2, id);
                     preparedStatement.setString(3, type);
@@ -258,21 +259,87 @@ public class Database {
 
         return val;
     }
-    public boolean pairPatient(int id) {
+    public boolean pairPatient(int Pat_id,int Clin_id) {
         boolean val=true;
         try {
             statement = connect.createStatement();
-            resultSet = statement
-                    .executeQuery("select * from Patient where Pat_ID  = '" + id + "'");
-            if (resultSet.next() == true) {
-                System.out.println("There were no results");
-                return true;
+
+
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientClinician(Pat_ID, Clin_ID)" + "values(?,?)");
+            preparedStatement.setInt(1, Pat_id);
+            preparedStatement.setInt(2, Clin_id);
+            preparedStatement.execute();
             }
-        }catch (SQLException e) {
+        catch (SQLException e) {
             System.out.println("Patient was already paired with clinician");
             val =true;
         }
         return val;
     }
+    public ArrayList<Integer> getPatientList(int id) {
+        ArrayList<Integer> array = new ArrayList<>();
+        try {
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from PatientClinician where Clin_ID  = '" + id + "'");
+            while(resultSet.next()) {
+                array.add(resultSet.getInt("Pat_ID"));
+            }
+
+        }
+        catch(SQLException e){
+            System.out.println("There was an error retrieving the patient list");
+        }
+        return array;
     }
+
+    public boolean setPatientInformation(int id,String gender, int age,int totalcholestorol,int hdlcholestorol, int bloodpressure, int hsCRP,boolean diabetes,boolean smokes,boolean family_history){
+        boolean val =true;
+        try {
+            statement = connect.createStatement();
+
+
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientInformation(Pat_ID,Pat_Gender,Pat_Age,Pat_TotalCholestorol,Pat_HDLCholestorol,Pat_BP,Pat_hsCRP,Pat_Diabetes,Pat_Smokes,Pat_FamilyHistory)" + "values(?,?,?,?,?,?,?,?,?,?)");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, gender);
+            preparedStatement.setInt(3, age);
+            preparedStatement.setInt(4, totalcholestorol);
+            preparedStatement.setInt(5, hdlcholestorol);
+            preparedStatement.setInt(6, bloodpressure);
+            preparedStatement.setInt(7, hsCRP);
+            preparedStatement.setBoolean(8, diabetes);
+            preparedStatement.setBoolean(9, smokes);
+            preparedStatement.setBoolean(10, family_history);
+            preparedStatement.execute();
+        }
+        catch (SQLException e) {
+        }
+
+        return val;
+    }
+    public boolean getPatientInformation(int id){
+        boolean val=true;
+        try {
+
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from PatientInformation where Pat_ID= '" + id + "'");
+            if (resultSet.next() == false) {
+                System.out.println("There were no results");
+                val = false;
+            }
+            else{
+
+                //FILL PATIENT INFORMATION OBJECT WITH RESULTS
+
+            }
+
+        }
+        catch (SQLException e){
+
+        }
+        return val;
+    }
+    }
+
 
