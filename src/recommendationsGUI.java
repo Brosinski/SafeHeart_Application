@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 public class recommendationsGUI extends JPanel {
 
     private JPanel recomMainPanel;
-    private JTextArea exerciseTextArea;
-    private JTextArea dietTextArea;
     private JButton saveDietBtn;
     private JButton saveExerciseBtn;
     private JLabel exerciseLabel;
     private JLabel dietLabel;
     private JLabel recomHeader;
+    private JTextField textField1;
+    private JTextField dietTextField;
 
     public recommendationsGUI(){
 
