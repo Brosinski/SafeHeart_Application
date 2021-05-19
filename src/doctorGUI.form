@@ -107,7 +107,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Patient ID : "/>
+          <text value="Doctor ID : "/>
         </properties>
       </component>
     </children>
