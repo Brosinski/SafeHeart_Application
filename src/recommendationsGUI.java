@@ -12,6 +12,7 @@ public class recommendationsGUI extends JPanel {
     private JButton saveExerciseBtn;
     private JLabel exerciseLabel;
     private JLabel dietLabel;
+    private JLabel recomHeader;
 
     public recommendationsGUI(){
 

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class doctorGUI extends JFrame {
+public class doctorGUI extends JPanel {
     private JPanel dMainPanel;
     private JButton editPatientBtn;
     private JTextField patientCodeText;
