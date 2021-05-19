@@ -13,6 +13,8 @@ public class doctorGUI extends JPanel {
     private JButton calculateBtn;
     private JButton addRecommendationBtn;
     private JButton addNoteBtn;
+    private JLabel dID;
+    private JLabel dIDLabel;
 
     public doctorGUI() {
 

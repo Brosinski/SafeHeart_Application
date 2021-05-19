@@ -39,7 +39,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Doctor ID : "/>
+          <text value="Patient ID : "/>
         </properties>
       </component>
       <component id="21240" class="javax.swing.JButton" binding="calculateBtn">
@@ -64,14 +64,6 @@
         </constraints>
         <properties>
           <text value="View Recommendations"/>
-        </properties>
-      </component>
-      <component id="539ef" class="javax.swing.JButton" binding="viewNotesBtn">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="View Notes"/>
         </properties>
       </component>
       <component id="7c4c8" class="javax.swing.JLabel" binding="riskScoreValue">

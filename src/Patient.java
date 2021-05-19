@@ -10,6 +10,7 @@ public class Patient{
     private int age;
     private int hsCRP;
     private double rrs;
+    private double HbA1C;
     private boolean smoker;
     private boolean diabetes;
 
@@ -86,6 +87,14 @@ public class Patient{
     }
     public boolean isFamilyHistory() {
         return familyHistory;
+    }
+
+    public double getHbA1C() {
+        return HbA1C;
+    }
+
+    public void setHbA1C(double hbA1C) {
+        HbA1C = hbA1C;
     }
 
     public void setFamilyHistory(boolean familyHistory) {

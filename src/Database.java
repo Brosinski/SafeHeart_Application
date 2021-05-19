@@ -293,13 +293,13 @@ public class Database {
         return array;
     }
 
-    public boolean setPatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP, boolean diabetes, boolean smokes, boolean family_history) {
+    public boolean setPatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP,double HbA1C, boolean diabetes, boolean smokes, boolean family_history) {
         boolean val = true;
         try {
             statement = connect.createStatement();
 
 
-            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientInformation(Pat_ID,Pat_Gender,Pat_Age,Pat_TotalCholestorol,Pat_HDLCholestorol,Pat_BP,Pat_hsCRP,Pat_Diabetes,Pat_Smokes,Pat_FamilyHistory)" + "values(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientInformation(Pat_ID,Pat_Gender,Pat_Age,Pat_TotalCholestorol,Pat_HDLCholestorol,Pat_BP,Pat_hsCRP,Pat_HbA1C,Pat_Diabetes,Pat_Smokes,Pat_FamilyHistory)" + "values(?,?,?,?,?,?,?,?,?,?,?)");
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, gender);
             preparedStatement.setInt(3, age);
@@ -307,9 +307,10 @@ public class Database {
             preparedStatement.setInt(5, hdlcholestorol);
             preparedStatement.setInt(6, bloodpressure);
             preparedStatement.setInt(7, hsCRP);
-            preparedStatement.setBoolean(8, diabetes);
-            preparedStatement.setBoolean(9, smokes);
-            preparedStatement.setBoolean(10, family_history);
+            preparedStatement.setDouble(8,HbA1C);
+            preparedStatement.setBoolean(9, diabetes);
+            preparedStatement.setBoolean(10, smokes);
+            preparedStatement.setBoolean(11, family_history);
             preparedStatement.execute();
         } catch (SQLException e) {
             val = false;
@@ -333,6 +334,7 @@ public class Database {
                 pat.setAge(resultSet.getInt("Pat_Age"));
                 pat.setHsCRP(resultSet.getInt("Pat_hsCRCP"));
                 pat.setBloodPressure(resultSet.getInt("Pat_BP"));
+                pat.setHbA1C(resultSet.getDouble("Pat_HbA1C"));
                 pat.setTotalCholesterol(resultSet.getInt("Pat_TotalCholestorol"));
                 pat.setHDLCholesterol(resultSet.getInt("Pat_HDLCholestorol"));
                 pat.setSmoker(resultSet.getBoolean("Pat_Smokes"));
