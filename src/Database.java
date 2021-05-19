@@ -258,4 +258,21 @@ public class Database {
 
         return val;
     }
-}
+    public boolean pairPatient(int id) {
+        boolean val=true;
+        try {
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from Patient where Pat_ID  = '" + id + "'");
+            if (resultSet.next() == true) {
+                System.out.println("There were no results");
+                return true;
+            }
+        }catch (SQLException e) {
+            System.out.println("Patient was already paired with clinician");
+            val =true;
+        }
+        return val;
+    }
+    }
+
