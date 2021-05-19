@@ -74,26 +74,19 @@ public class Database {
         System.out.println("Successfully Established connection");
         return val;
     }
-    public boolean registerPatient(String email, String password, String firstName, String familyName,boolean isSpecialPrac){
+    public boolean registerPatient(String email, String password, String firstName, String familyName){
         boolean val = true;
-        String type;
+
         if(createUser(email,password,firstName,familyName)) {
             int id = generateIDCode();
-            if(isSpecialPrac) {
-                type="GP";
-            }
-            else{
-                type="SP";
-            }
             if(!checkForID(id)==true) {
                 try {
                     statement = connect.createStatement();
 
 
-                    PreparedStatement preparedStatement = connect.prepareStatement("insert into (Clin_Email, Clin_ID, Clin_Type)" + "values(?,?,?)");
+                    PreparedStatement preparedStatement = connect.prepareStatement("insert into (Pat_Email, Pat_ID)" + "values(?,?)");
                     preparedStatement.setString(1, email);
                     preparedStatement.setInt(2, id);
-                    preparedStatement.setString(3, type);
                     preparedStatement.execute();
 
                 } catch (SQLException e) {
@@ -196,6 +189,8 @@ public class Database {
         }
         return val;
     }
+
+
     public int getClinicianID(String email) {         //Returns an int of zero on SQL
         int val = 0;
         try {
