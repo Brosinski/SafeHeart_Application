@@ -62,7 +62,7 @@ public class SignIn extends JPanel {
     Database db = new Database();
     GridBagConstraints c= new GridBagConstraints();
     public SignIn() {
-
+        System.out.println("Working");
         this.setLayout(new GridLayout(1, 2, 0, 0));
         this.setBackground(Color.white);
         titleLogo=new JPanel();
@@ -288,7 +288,7 @@ public void signIn(AWTEvent e) {
         userTypeBox = new JPanel();
         firstNameBox.setLayout(new GridBagLayout());
         familyNameBox.setLayout(new GridBagLayout());
-        userTypeBox.setLayout(new GridLayout(1,2,10,0));
+        userTypeBox.setLayout(new GridLayout(1,1,10,0));
         JPanel hold = new JPanel(new FlowLayout());
         JPanel hold2 = new JPanel(new FlowLayout());
         JPanel hold3 = new JPanel(new FlowLayout());
@@ -315,16 +315,10 @@ public void signIn(AWTEvent e) {
         selection.add(clinician);
         selection2.add(male);
         selection2.add(female);
-        hold3.add(male);
-        hold3.add(female);
+
         hold.add(patient);
         hold.add(clinician);
-
-
-
         userTypeBox.add(hold);
-
-        userTypeBox.add(hold3);
 
 
         firstText = new JLabel("First Name:");
@@ -379,39 +373,8 @@ public void signIn(AWTEvent e) {
 
         loginReg = new JPanel();
         loginReg.setBackground(Color.white);
-        loginReg.setLayout(new GridLayout(4,1,0,0));
+        loginReg.setLayout(new GridLayout(3,1,0,0));
 
-        passwordBox2 = new JPanel();
-        passwordBox2.setLayout(new GridBagLayout());
-        passwordBox2.setBackground(Color.WHITE);
-        passText2 = new JLabel("Age:");
-
-        passText2.setFont(new Font("Verdana",Font.BOLD,15));
-        c.fill = GridBagConstraints.PAGE_START;
-        c.gridx =3;
-        c.gridy = 0;
-        passwordBox2.add(passText2,c);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx=3;
-        c.gridy = 1;
-        c.gridwidth= 2;
-        c.ipadx =200;
-
-
-
-        c.insets=new Insets(5,0,0,0);
-        password2 = new JPasswordField(SwingConstants.LEFT);
-        passwordBox2.add(password2,c);
-        filler = new JPanel();
-        filler.setBackground(Color.WHITE);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx=4;
-        c.gridwidth = 2;
-        c.gridy= 3;
-        passwordBox2.add(filler,c);
-        password2.addKeyListener(keyListener);
-
-        loginReg.add(passwordBox2);
         loginReg.add(emailBox);
         loginReg.add(passwordBox);
 

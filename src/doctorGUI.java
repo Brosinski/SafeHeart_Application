@@ -19,6 +19,7 @@ public class doctorGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(doctorMainPanel);
         this.pack();
+        this.setVisible(true);
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -33,8 +34,4 @@ public class doctorGUI extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new doctorGUI("Doctor");
-        frame.setVisible(true);
-    }
 }
