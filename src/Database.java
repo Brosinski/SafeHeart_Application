@@ -9,8 +9,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.sql.DataSource;
+import java.sql.Date;
+
+
 
 public class Database {
     private Connection connect = null;
@@ -75,12 +78,13 @@ public class Database {
         System.out.println("Successfully Established connection");
         return val;
     }
-    public boolean registerPatient(String email, String password, String firstName, String familyName){
+
+    public boolean registerPatient(String email, String password, String firstName, String familyName) {
         boolean val = true;
 
-        if(createUser(email,password,firstName,familyName)) {
+        if (createUser(email, password, firstName, familyName)) {
             int id = generateIDCode();
-            if(!checkForID(id)==true) {
+            if (!checkForID(id) == true) {
                 try {
                     statement = connect.createStatement();
 
@@ -91,33 +95,30 @@ public class Database {
                     preparedStatement.execute();
 
                 } catch (SQLException e) {
-                    val =false;
+                    val = false;
                 }
-            }
-            else {
-            val=false;
+            } else {
+                val = false;
             }
 
 
-        }
-        else{
-            val=false;
+        } else {
+            val = false;
         }
         return val;
     }
 
-    public boolean registerClinician(String email, String password, String firstName, String familyName,boolean isSpecialPrac){
+    public boolean registerClinician(String email, String password, String firstName, String familyName, boolean isSpecialPrac) {
         boolean val = true;
         String type;
-        if(createUser(email,password,firstName,familyName)) {
+        if (createUser(email, password, firstName, familyName)) {
             int id = generateIDCode();
-            if(isSpecialPrac) {
-                type="GP";
+            if (isSpecialPrac) {
+                type = "GP";
+            } else {
+                type = "SP";
             }
-            else{
-                type="SP";
-            }
-            if(!checkForID(id)==true) {
+            if (!checkForID(id) == true) {
                 try {
                     statement = connect.createStatement();
 
@@ -129,20 +130,19 @@ public class Database {
                     preparedStatement.execute();
 
                 } catch (SQLException e) {
-                    val =false;
+                    val = false;
                 }
-            }
-            else {
-                val=false;
+            } else {
+                val = false;
             }
 
 
-        }
-        else{
-            val=false;
+        } else {
+            val = false;
         }
         return val;
     }
+
     public boolean createUser(String email, String password, String firstName, String familyName) {
 
         password = hashed.hashStringSHA256(password);
@@ -212,25 +212,25 @@ public class Database {
     }
 
     public int generateIDCode() {
-        String code ="";
-        int intcode =0;
+        String code = "";
+        int intcode = 0;
         String c;
-        for(int i =0; i<8;i++) {
-            if(i==0) {
-                c=String.valueOf((int)(Math.random()*11+1));
-                code = code +c;
-            }
-            else{
+        for (int i = 0; i < 8; i++) {
+            if (i == 0) {
+                c = String.valueOf((int) (Math.random() * 11 + 1));
+                code = code + c;
+            } else {
 
-                c=String.valueOf((int)(Math.random()*11));
-                code = code +c;
+                c = String.valueOf((int) (Math.random() * 11));
+                code = code + c;
             }
 
         }
-        intcode =Integer.parseInt(code);
+        intcode = Integer.parseInt(code);
         return intcode;
     }
-    public boolean checkForID(int id){
+
+    public boolean checkForID(int id) {
         boolean val = false;
         try {
             statement = connect.createStatement();
@@ -241,7 +241,7 @@ public class Database {
                 return true;
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Something went wrong");
         }
         try {
@@ -253,14 +253,15 @@ public class Database {
                 return true;
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Something went wrong");
         }
 
         return val;
     }
-    public boolean pairPatient(int Pat_id,int Clin_id) {
-        boolean val=true;
+
+    public boolean pairPatient(int Pat_id, int Clin_id) {
+        boolean val = true;
         try {
             statement = connect.createStatement();
 
@@ -269,32 +270,31 @@ public class Database {
             preparedStatement.setInt(1, Pat_id);
             preparedStatement.setInt(2, Clin_id);
             preparedStatement.execute();
-            }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Patient was already paired with clinician");
-            val =true;
+            val = true;
         }
         return val;
     }
+
     public ArrayList<Integer> getPatientList(int id) {
         ArrayList<Integer> array = new ArrayList<>();
         try {
             statement = connect.createStatement();
             resultSet = statement
                     .executeQuery("select * from PatientClinician where Clin_ID  = '" + id + "'");
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 array.add(resultSet.getInt("Pat_ID"));
             }
 
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("There was an error retrieving the patient list");
         }
         return array;
     }
 
-    public boolean setPatientInformation(int id,String gender, int age,int totalcholestorol,int hdlcholestorol, int bloodpressure, int hsCRP,boolean diabetes,boolean smokes,boolean family_history){
-        boolean val =true;
+    public boolean setPatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP, boolean diabetes, boolean smokes, boolean family_history) {
+        boolean val = true;
         try {
             statement = connect.createStatement();
 
@@ -311,15 +311,15 @@ public class Database {
             preparedStatement.setBoolean(9, smokes);
             preparedStatement.setBoolean(10, family_history);
             preparedStatement.execute();
-        }
-        catch (SQLException e) {
-            val= false;
+        } catch (SQLException e) {
+            val = false;
         }
 
         return val;
     }
-    public boolean getPatientInformation(int id,Patient pat){
-        boolean val=true;
+
+    public boolean getPatientInformation(int id, Patient pat) {
+        boolean val = true;
         try {
 
             statement = connect.createStatement();
@@ -328,8 +328,7 @@ public class Database {
             if (resultSet.next() == false) {
                 System.out.println("There were no results");
                 val = false;
-            }
-            else{
+            } else {
                 pat.setGender(resultSet.getString("Pat_Gender"));
                 pat.setAge(resultSet.getInt("Pat_Age"));
                 pat.setHsCRP(resultSet.getInt("Pat_hsCRCP"));
@@ -341,12 +340,66 @@ public class Database {
                 pat.setDiabetes(resultSet.getBoolean("Pat_Diabetes"));
             }
 
-        }
-        catch (SQLException e){
-            val=false;
+        } catch (SQLException e) {
+            val = false;
         }
         return val;
     }
+
+    public boolean setPatientNote(String noteContent, Date noteDate, int patID, int clinID) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientNote(Pat_ID,Clin_ID,Note_Date,Note_Content" + "values(?,?,?,?)");
+            preparedStatement.setInt(1, patID);
+            preparedStatement.setInt(2, clinID);
+            preparedStatement.setDate(3, noteDate);
+            preparedStatement.setString(4, noteContent);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
+
+    public boolean getPatientNote(String noteContent, Date noteDate, int patID, int clinID) {
+        return true;
+    }
+
+
+    public boolean setRecommendation(String dietRec, String exerciseRec, int patID, int clinID,Date dateRec) {
+        try {
+
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            java.util.Date date = new java.util.Date();
+            java.sql.Date sqldate =new java.sql.Date(date.getTime());
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date" + "values(?,?,?,?,?)");
+            preparedStatement.setInt(1, patID);
+            preparedStatement.setInt(2, clinID);
+            preparedStatement.setString(3, exerciseRec);
+            preparedStatement.setString(4, dietRec);
+            preparedStatement.setDate(5, sqldate);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+    public ArrayList<Recommendation> getRecommendation(String dietRec, String exerciseRec, int patID, int clinID) {   //Returns null on error
+        ArrayList<Recommendation> array = new ArrayList<>();
+        try {
+
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from PatientInformation where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
+            while(resultSet.next()) {
+
+                array.add(new Recommendation(resultSet.getString("Rec_Exercise"),resultSet.getString("Rec_Diet"),resultSet.getDate("Rec_Date")));
+
+            }
+
+        }catch (SQLException e){
+            return null;
+        }
+        return array;
+    }
+}
+
 
 

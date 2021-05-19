@@ -21,7 +21,7 @@ public class addPatientGUI {
 
     public addPatientGUI(){
 
-        thi
+
 
     }
 }
