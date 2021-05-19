@@ -1,21 +1,25 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class patientGUI extends JPanel {
-    private JPanel mainPanel;
+public class doctorGUI extends JFrame {
+    private JPanel doctorMainPanel;
+    private JButton findPatientButton;
+    private JButton editPatientButton;
     private JTextField patientCodeText;
+    private JLabel jLabel1;
+    private JLabel riskScoreLabel;
+    private JLabel jLabel2;
     private JButton findPatientBtn;
     private JScrollPane patientViewPanel;
     private JButton calculateBtn;
-//paientGUI
-    public patientGUI(){
 
+    public doctorGUI(String title) {
+        super(title);
 
-        this.setLayout(new GridLayout(1,1));
-        this.add(mainPanel);
-
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setContentPane(doctorMainPanel);
+        this.pack();
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -30,5 +34,8 @@ public class patientGUI extends JPanel {
         });
     }
 
-
+    public static void main(String[] args) {
+        JFrame frame = new doctorGUI("Doctor");
+        frame.setVisible(true);
+    }
 }
