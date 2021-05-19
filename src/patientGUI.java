@@ -9,7 +9,7 @@ public class patientGUI extends JPanel {
     private JButton findPatientBtn;
     private JScrollPane patientViewPanel;
     private JButton calculateBtn;
-
+//paientGUI
     public patientGUI(){
 
 
