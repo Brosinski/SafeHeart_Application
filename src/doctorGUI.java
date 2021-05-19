@@ -1,32 +1,53 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class doctorGUI extends JFrame {
-    private JPanel doctorMainPanel;
-    private JButton editPatientButton;
+    private JPanel dMainPanel;
+    private JButton editPatientBtn;
     private JTextField patientCodeText;
-    private JLabel jLabel1;
-    private JLabel riskScoreLabel;
     private JLabel jLabel2;
-    private JButton findPatientBtn;
+    private JButton addPatientBtn;
     private JScrollPane patientViewPanel;
     private JButton calculateBtn;
+    private JButton addRecommendationBtn;
+    private JButton addNoteBtn;
 
-    public doctorGUI(String title) {
-        super(title);
+    public doctorGUI() {
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(doctorMainPanel);
-        this.pack();
-        this.setVisible(true);
+        this.setLayout(new GridLayout(1,1));
+        this.add(dMainPanel);
+
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
             }
         });
-        findPatientBtn.addActionListener(new ActionListener() {
+
+        addPatientBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        editPatientBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        addRecommendationBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        addNoteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
