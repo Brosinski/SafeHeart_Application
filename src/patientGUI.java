@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class patientGUI extends JPanel {
     private JPanel pMainPanel;
-    private JScrollPane pScrollPanel;
+    private JScrollPane pScrollPane;
     private JButton calculateBtn;
     private JButton viewNotesBtn;
     private JButton viewRecommendationsBtn;
@@ -15,9 +15,8 @@ public class patientGUI extends JPanel {
     private JLabel newRiskScoreLabel;
     private JLabel riskScoreLabel;
 
-    //paientGUI
+    //patientGUI
     public patientGUI(){
-
 
         this.setLayout(new GridLayout(1,1));
         this.add(pMainPanel);
@@ -29,7 +28,19 @@ public class patientGUI extends JPanel {
             }
         });
 
+        viewNotesBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        viewRecommendationsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
     }
-
-
 }
