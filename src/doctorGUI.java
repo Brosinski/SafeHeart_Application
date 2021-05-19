@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 
 public class doctorGUI extends JFrame {
     private JPanel doctorMainPanel;
-    private JButton findPatientButton;
     private JButton editPatientButton;
     private JTextField patientCodeText;
     private JLabel jLabel1;
