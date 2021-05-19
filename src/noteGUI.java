@@ -17,7 +17,7 @@ public class noteGUI extends JPanel{
         saveNoteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                String noteText = noteTextArea.getText();
             }
         });
     }

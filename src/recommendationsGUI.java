@@ -11,8 +11,8 @@ public class recommendationsGUI extends JPanel {
     private JLabel exerciseLabel;
     private JLabel dietLabel;
     private JLabel recomHeader;
-    private JTextField textField1;
-    private JTextField dietTextField;
+    private JTextArea textArea1;
+    private JTextArea textArea2;
 
     public recommendationsGUI(){
 
@@ -22,6 +22,7 @@ public class recommendationsGUI extends JPanel {
         saveExerciseBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                String text1 = textArea1.getText();
 
             }
         });
@@ -29,7 +30,7 @@ public class recommendationsGUI extends JPanel {
         saveDietBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                String text2 = textArea2.getText();
             }
         });
     }
