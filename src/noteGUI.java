@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class noteGUI extends JPanel{
     private JPanel noteMainPanel;
@@ -12,5 +14,11 @@ public class noteGUI extends JPanel{
         this.setLayout(new GridLayout(1,1));
         this.add(noteMainPanel);
 
+        saveNoteBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
     }
 }
