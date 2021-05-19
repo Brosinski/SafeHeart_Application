@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class addPatientGUI {
+public class addPatientGUI extends JPanel {
 
     private JPanel addPatientMainPanel;
     private JCheckBox patientHasDiabetesCheckBox;
@@ -21,7 +21,10 @@ public class addPatientGUI {
 
     public addPatientGUI(){
 
-        thi
+        this.setLayout(new GridLayout(1,1));
+        this.add(addPatientMainPanel);
+
+
 
     }
 }
