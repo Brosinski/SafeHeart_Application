@@ -5,11 +5,15 @@ import java.awt.event.ActionListener;
 
 public class patientGUI extends JPanel {
     private JPanel mainPanel;
-    private JTextField patientCodeText;
-    private JButton findPatientBtn;
-    private JScrollPane patientViewPanel;
+    private JScrollPane pViewPanel;
     private JButton calculateBtn;
-//paientGUI
+    private JButton viewNotesButton;
+    private JButton viewRecommendationsButton;
+    private JLabel riskScoreValue;
+    private JLabel dID;
+    private JLabel dIDLabel;
+
+    //paientGUI
     public patientGUI(){
 
 
@@ -22,12 +26,7 @@ public class patientGUI extends JPanel {
 
             }
         });
-        findPatientBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
 
-            }
-        });
     }
 
 
