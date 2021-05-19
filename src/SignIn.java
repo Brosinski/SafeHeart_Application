@@ -14,6 +14,7 @@ public class SignIn extends JPanel {
     JLabel passText;
     JLabel passText2;
     JLabel displayImage;
+    JLabel ageText;
     JLabel emailText;
     JLabel loginImage;
     JLabel firstText;
@@ -28,6 +29,7 @@ public class SignIn extends JPanel {
     JPanel emailBox;
     JPanel passwordBox;
     JPanel passwordBox2;
+    JPanel ageBox;
     JPanel signPanel;
     JPanel regPanel;
     JPanel login;
@@ -42,7 +44,9 @@ public class SignIn extends JPanel {
     KeyListener keyListener2;
     JRadioButton clinician;
     JRadioButton patient;
-    final String code="x5DeB";
+    JRadioButton male;
+    JRadioButton female;
+    final String code="SafeHeart";
     final JButton signButton =new JButton("Sign in");
     final JButton regButton = new JButton("Register");
     final JButton createButton = new JButton("Create Account");
@@ -64,6 +68,7 @@ public class SignIn extends JPanel {
         titleLogo=new JPanel();
         titleLogo.setLayout(new GridLayout(2,1,10,10));
         titleLogo.setBackground(Color.white);
+
         //Top half of titleLogo
         titleWelcome = new JPanel();
         titleWelcome.setLayout(new GridLayout(2,1,0,0));
@@ -79,15 +84,18 @@ public class SignIn extends JPanel {
         titleText.setBackground(Color.white);
         titleText.add(titleLable);
         titleText.add(titleLable2);
+
+
         //Images for SignIn screen
         ImageIcon i = new ImageIcon("doctors.jpg");
         ImageIcon heart = new ImageIcon("heart.jpg");
         loginImage = new JLabel(heart);
         displayImage = new JLabel(i);
-
+        /////////////////////////////
+        //
         titleWelcome.add(loginImage);
         titleWelcome.add(titleText);
-
+        //BOTTOM HALF
         email = new JTextField(SwingConstants.LEFT);
         emailBox = new JPanel();
         emailBox.setLayout(new GridBagLayout());
@@ -118,8 +126,8 @@ public class SignIn extends JPanel {
         c.gridwidth = 2;
         c.gridy= 3;
         emailBox.add(filler2,c);
-////////////////////////////////////////
-        ////////////////////////////////
+
+
         password = new JPasswordField(SwingConstants.LEFT);
         passwordBox = new JPanel();
         passwordBox.setLayout(new GridBagLayout());
@@ -280,18 +288,44 @@ public void signIn(AWTEvent e) {
         userTypeBox = new JPanel();
         firstNameBox.setLayout(new GridBagLayout());
         familyNameBox.setLayout(new GridBagLayout());
-        userTypeBox.setLayout(new FlowLayout());
+        userTypeBox.setLayout(new GridLayout(1,2,10,0));
+        JPanel hold = new JPanel(new FlowLayout());
+        JPanel hold2 = new JPanel(new FlowLayout());
+        JPanel hold3 = new JPanel(new FlowLayout());
+        hold.setBackground(Color.WHITE);
+        hold2.setBackground(Color.WHITE);
+        hold3.setBackground(Color.WHITE);
+
         firstNameBox.setBackground(Color.white);
         familyNameBox.setBackground(Color.white);
 
         userTypeBox.setBackground(Color.WHITE);
         patient = new JRadioButton("Patient");
         clinician = new JRadioButton("Clinician");
+        male = new JRadioButton("Male");
+        female = new JRadioButton("Female");
+        patient.setBackground(Color.WHITE);
+        clinician.setBackground(Color.WHITE);
+        male.setBackground(Color.WHITE);
+        female.setBackground(Color.WHITE);
+
         ButtonGroup selection = new ButtonGroup();
+        ButtonGroup selection2 = new ButtonGroup();
         selection.add(patient);
         selection.add(clinician);
-        userTypeBox.add(patient);
-        userTypeBox.add(clinician);
+        selection2.add(male);
+        selection2.add(female);
+        hold3.add(male);
+        hold3.add(female);
+        hold.add(patient);
+        hold.add(clinician);
+
+
+
+        userTypeBox.add(hold);
+
+        userTypeBox.add(hold3);
+
 
         firstText = new JLabel("First Name:");
         familyText= new JLabel("Second Name:");
@@ -350,7 +384,7 @@ public void signIn(AWTEvent e) {
         passwordBox2 = new JPanel();
         passwordBox2.setLayout(new GridBagLayout());
         passwordBox2.setBackground(Color.WHITE);
-        passText2 = new JLabel("Confirm Password:");
+        passText2 = new JLabel("Age:");
 
         passText2.setFont(new Font("Verdana",Font.BOLD,15));
         c.fill = GridBagConstraints.PAGE_START;
@@ -360,7 +394,7 @@ public void signIn(AWTEvent e) {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx=3;
         c.gridy = 1;
-        c.gridwidth= 3;
+        c.gridwidth= 2;
         c.ipadx =200;
 
 
@@ -377,10 +411,10 @@ public void signIn(AWTEvent e) {
         passwordBox2.add(filler,c);
         password2.addKeyListener(keyListener);
 
-
+        loginReg.add(passwordBox2);
         loginReg.add(emailBox);
         loginReg.add(passwordBox);
-        loginReg.add(passwordBox2);
+
         regPanel.add(backButton);
         regPanel.remove(regButton);
         regPanel.add(createButton);

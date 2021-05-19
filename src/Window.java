@@ -13,7 +13,7 @@ public class Window extends JFrame {
         getContentPane().setBackground(Color.white);
         this.screenwidth = this.screenSize.getWidth();
         this.screenheight = this.screenSize.getHeight();
-        this.setBounds((int)this.screenwidth / 2 -500,(int)this.screenheight / 2 -250, 1000,500);   //Sets size of log in window and centers it to middle of screen
+        this.setBounds((int)this.screenwidth / 2 -550,(int)this.screenheight / 2 -250, 1100,500);   //Sets size of log in window and centers it to middle of screen
 
         this.setLayout(new GridLayout(1, 1, 20, 0));
 
