@@ -9,8 +9,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.sql.DataSource;
+import java.sql.Date;
+
+
 
 public class Database {
     private Connection connect = null;
@@ -35,8 +38,8 @@ public class Database {
     }
 
 
-    public boolean confirmCredentials(String email, String pass) {
-        boolean val = true;
+    public int confirmCredentials(String email, String pass) {
+        int val = 0;
         try {
 
             statement = connect.createStatement();
@@ -44,7 +47,7 @@ public class Database {
                     .executeQuery("select * from User where User_Email = '" + email + "'");
             if (resultSet.next() == false) {
                 System.out.println("There were no results");
-                val = false;
+                val = 0;
             }
 
             //Hashes the passed in value
@@ -52,11 +55,11 @@ public class Database {
             resultSet.beforeFirst();
             while (resultSet.next()) {
                 String password = resultSet.getString("User_Password");
-                if (password.equals(pass)) {         //Returns true if password is correct
-                    val = true;
+                if (password.equals(pass)) {         //Returns 1 if password is correct
+                    val = 1;
 
-                } else if (!password.equals(pass)) {
-                    val = false;
+                } else if (!password.equals(pass)) { //Returns 0 if password is incorrect
+                    val = 0;
 
 
                     System.out.println(password);
@@ -67,20 +70,21 @@ public class Database {
             }
 
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("FAILED");
-            return false;
+            System.out.println("FAILED");           //Returns 2 if on connection error
+            return 2;
         }
         System.out.println("Successfully Established connection");
         return val;
     }
-    public boolean registerPatient(String email, String password, String firstName, String familyName){
+
+    public boolean registerPatient(String email, String password, String firstName, String familyName) {   //TURN INTO INT METHOD
         boolean val = true;
 
-        if(createUser(email,password,firstName,familyName)) {
+        if (createUser(email, password, firstName, familyName)) {
             int id = generateIDCode();
-            if(!checkForID(id)==true) {
+            if (!checkForID(id) == true) {
                 try {
                     statement = connect.createStatement();
 
@@ -91,58 +95,54 @@ public class Database {
                     preparedStatement.execute();
 
                 } catch (SQLException e) {
-                    val =false;
+                    val = false;
                 }
-            }
-            else {
-            val=false;
+            } else {
+                val = false;
             }
 
 
-        }
-        else{
-            val=false;
+        } else {
+            val = false;
         }
         return val;
     }
 
-    public boolean registerClinician(String email, String password, String firstName, String familyName,boolean isSpecialPrac){
+    public boolean registerClinician(String email, String password, String firstName, String familyName, boolean isSpecialPrac) {    //ADD NUMBER FUNCTIONALITY
         boolean val = true;
         String type;
-        if(createUser(email,password,firstName,familyName)) {
+        if (createUser(email, password, firstName, familyName)) {
             int id = generateIDCode();
-            if(isSpecialPrac) {
-                type="GP";
+            if (isSpecialPrac) {
+                type = "SP";
+            } else {
+                type = "GP";
             }
-            else{
-                type="SP";
-            }
-            if(!checkForID(id)==true) {
+            if (!checkForID(id) == true) {
                 try {
                     statement = connect.createStatement();
 
 
-                    PreparedStatement preparedStatement = connect.prepareStatement("insert into Clinicianggggggggg (Clin_Email, Clin_ID, Clin_Type)" + "values(?,?,?)");
+                    PreparedStatement preparedStatement = connect.prepareStatement("insert into Clinician(Clin_Email, Clin_ID, Clin_Type)" + "values(?,?,?)");
                     preparedStatement.setString(1, email);
                     preparedStatement.setInt(2, id);
                     preparedStatement.setString(3, type);
                     preparedStatement.execute();
 
                 } catch (SQLException e) {
-                    val =false;
+                    val = false;
                 }
-            }
-            else {
-                val=false;
+            } else {
+                val = false;
             }
 
 
-        }
-        else{
-            val=false;
+        } else {
+            val = false;
         }
         return val;
     }
+
     public boolean createUser(String email, String password, String firstName, String familyName) {
 
         password = hashed.hashStringSHA256(password);
@@ -212,25 +212,25 @@ public class Database {
     }
 
     public int generateIDCode() {
-        String code ="";
-        int intcode =0;
+        String code = "";
+        int intcode = 0;
         String c;
-        for(int i =0; i<8;i++) {
-            if(i==0) {
-                c=String.valueOf((int)(Math.random()*11+1));
-                code = code +c;
-            }
-            else{
+        for (int i = 0; i < 8; i++) {
+            if (i == 0) {
+                c = String.valueOf((int) (Math.random() * 11 + 1));
+                code = code + c;
+            } else {
 
-                c=String.valueOf((int)(Math.random()*11));
-                code = code +c;
+                c = String.valueOf((int) (Math.random() * 11));
+                code = code + c;
             }
 
         }
-        intcode =Integer.parseInt(code);
+        intcode = Integer.parseInt(code);
         return intcode;
     }
-    public boolean checkForID(int id){
+
+    public boolean checkForID(int id) {
         boolean val = false;
         try {
             statement = connect.createStatement();
@@ -241,7 +241,7 @@ public class Database {
                 return true;
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Something went wrong");
         }
         try {
@@ -249,18 +249,19 @@ public class Database {
             resultSet = statement
                     .executeQuery("select * from Patient where Pat_ID  = '" + id + "'");
             if (resultSet.next() == true) {
-                System.out.println("There were no results");
+                System.out.println("This code already exists");
                 return true;
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Something went wrong");
         }
 
         return val;
     }
-    public boolean pairPatient(int Pat_id,int Clin_id) {
-        boolean val=true;
+
+    public boolean pairPatient(int Pat_id, int Clin_id) {
+        boolean val = true;
         try {
             statement = connect.createStatement();
 
@@ -269,32 +270,31 @@ public class Database {
             preparedStatement.setInt(1, Pat_id);
             preparedStatement.setInt(2, Clin_id);
             preparedStatement.execute();
-            }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Patient was already paired with clinician");
-            val =true;
+            val = false;
         }
         return val;
     }
+
     public ArrayList<Integer> getPatientList(int id) {
         ArrayList<Integer> array = new ArrayList<>();
         try {
             statement = connect.createStatement();
             resultSet = statement
                     .executeQuery("select * from PatientClinician where Clin_ID  = '" + id + "'");
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 array.add(resultSet.getInt("Pat_ID"));
             }
 
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("There was an error retrieving the patient list");
         }
         return array;
     }
 
-    public boolean setPatientInformation(int id,String gender, int age,int totalcholestorol,int hdlcholestorol, int bloodpressure, int hsCRP,boolean diabetes,boolean smokes,boolean family_history){
-        boolean val =true;
+    public boolean setPatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP, boolean diabetes, boolean smokes, boolean family_history) {
+        boolean val = true;
         try {
             statement = connect.createStatement();
 
@@ -311,14 +311,15 @@ public class Database {
             preparedStatement.setBoolean(9, smokes);
             preparedStatement.setBoolean(10, family_history);
             preparedStatement.execute();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
+            val = false;
         }
 
         return val;
     }
-    public boolean getPatientInformation(int id){
-        boolean val=true;
+
+    public boolean getPatientInformation(int id, Patient pat) {
+        boolean val = true;
         try {
 
             statement = connect.createStatement();
@@ -327,19 +328,98 @@ public class Database {
             if (resultSet.next() == false) {
                 System.out.println("There were no results");
                 val = false;
+            } else {
+                pat.setGender(resultSet.getString("Pat_Gender"));
+                pat.setAge(resultSet.getInt("Pat_Age"));
+                pat.setHsCRP(resultSet.getInt("Pat_hsCRCP"));
+                pat.setBloodPressure(resultSet.getInt("Pat_BP"));
+                pat.setTotalCholesterol(resultSet.getInt("Pat_TotalCholestorol"));
+                pat.setHDLCholesterol(resultSet.getInt("Pat_HDLCholestorol"));
+                pat.setSmoker(resultSet.getBoolean("Pat_Smokes"));
+                pat.setFamilyHistory(resultSet.getBoolean("Pat_FamilyHistory"));
+                pat.setDiabetes(resultSet.getBoolean("Pat_Diabetes"));
             }
-            else{
 
-                //FILL PATIENT INFORMATION OBJECT WITH RESULTS
-
-            }
-
-        }
-        catch (SQLException e){
-
+        } catch (SQLException e) {
+            val = false;
         }
         return val;
     }
+
+    public boolean setPatientNote(String noteContent, int patID, int clinID) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        java.util.Date date = new java.util.Date();
+        java.sql.Date noteDate =new java.sql.Date(date.getTime());
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientNote(Pat_ID,Clin_ID,Note_Date,Note_Content" + "values(?,?,?,?)");
+            preparedStatement.setInt(1, patID);
+            preparedStatement.setInt(2, clinID);
+            preparedStatement.setDate(3, noteDate);
+            preparedStatement.setString(4, noteContent);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
+
+    public ArrayList<PatientNote> getPatientNote(String noteContent, Date noteDate, int patID, int clinID) {
+        ArrayList<PatientNote> array = new ArrayList<>();
+        try {
+
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from PatientNote where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
+            while(resultSet.next()) {
+
+                array.add(new PatientNote(resultSet.getString("Note_Content"),resultSet.getDate("Note_Date")));
+
+            }
+
+        }catch (SQLException e){
+            return null;
+        }
+        return array;
+    }
+
+
+
+
+    public boolean setRecommendation(String dietRec, String exerciseRec, int patID, int clinID,Date dateRec) {
+        try {
+
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            java.util.Date date = new java.util.Date();
+            java.sql.Date recDate =new java.sql.Date(date.getTime());
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date" + "values(?,?,?,?,?)");
+            preparedStatement.setInt(1, patID);
+            preparedStatement.setInt(2, clinID);
+            preparedStatement.setString(3, exerciseRec);
+            preparedStatement.setString(4, dietRec);
+            preparedStatement.setDate(5, recDate);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+    public ArrayList<Recommendation> getRecommendation(String dietRec, String exerciseRec, int patID, int clinID) {   //Returns null on error
+        ArrayList<Recommendation> array = new ArrayList<>();
+        try {
+
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from Recommendation where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
+            while(resultSet.next()) {
+
+                array.add(new Recommendation(resultSet.getString("Rec_Exercise"),resultSet.getString("Rec_Diet"),resultSet.getDate("Rec_Date")));
+
+            }
+
+        }catch (SQLException e){
+            return null;
+        }
+        return array;
+    }
+}
+
 
 

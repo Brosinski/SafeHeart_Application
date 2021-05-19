@@ -2,23 +2,37 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class Patient{
-    private int cholesterolLevel;
-    private int bloodPressure;
 
+    private int bloodPressure;
+    private int totalCholesterol;
+    private int HDLCholesterol;
+    private String gender;
+    private int age;
     private int hsCRP;
     private double rrs;
     private boolean smoker;
+    private boolean diabetes;
+
+
+
+    private boolean familyHistory;
 
     public Patient(int cl, int bp, int rr, int hs){
 
-        cholesterolLevel = cl;
+        totalCholesterol= cl;
         bloodPressure = bp;
         hsCRP = hs;
         rrs = rr;
     }
+    public int getHDLCholesterol() {
+        return HDLCholesterol;
+    }
 
-    public void setCholesterol(int cl){
-        cholesterolLevel = cl;
+    public void setHDLCholesterol(int HDLCholesterol) {
+        this.HDLCholesterol = HDLCholesterol;
+    }
+    public void setTotalCholesterol(int cl){
+        totalCholesterol = cl;
     }
 
     public void sethsCRP(int hs){
@@ -44,25 +58,59 @@ public class Patient{
     }
 
     public int getCholesterol(){
-        return cholesterolLevel;
+        return totalCholesterol;
     }
 
     public int getBloodPressure(){
         return bloodPressure;
     }
 
-
+     public void setGender(String gender){
+        this.gender=gender;
+     }
+    public String getGender(){
+        return gender;
+    }
 
     public boolean getSmokerStatus(){
         return smoker;
     }
+    public void setSmoker(boolean smoker) {
+        this.smoker = smoker;
+    }
+    public int getAge(){
+        return age;
+    }
+    public void setAge(int age){
+        this.age=age;
+    }
+    public boolean isFamilyHistory() {
+        return familyHistory;
+    }
 
+    public void setFamilyHistory(boolean familyHistory) {
+        this.familyHistory = familyHistory;
+    }
+    public boolean isDiabetes() {
+        return diabetes;
+    }
+
+    public void setDiabetes(boolean diabetes) {
+        this.diabetes = diabetes;
+    }
+    public int getHsCRP() {
+        return hsCRP;
+    }
+
+    public void setHsCRP(int hsCRP) {
+        this.hsCRP = hsCRP;
+    }
     public String printPatientDocument(String msg){
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date dateTime = new Date();
 
         msg = df.format(dateTime) + "\nNursing Notes: \n" + bloodPressure
-                + "\n" + cholesterolLevel + "\n" + rrs + "\n" + smoker + "\n" + hsCRP +"\nImage Results:  ";
+                + "\n" + totalCholesterol + "\n" + rrs + "\n" + smoker + "\n" + hsCRP +"\n"+HDLCholesterol;
         return msg;
     }
 }

@@ -252,19 +252,22 @@ public class SignIn extends JPanel {
 public void signIn(AWTEvent e) {
 
 
-    boolean dude =db.confirmCredentials(email.getText(),new String(password.getPassword()));
+    int dude =db.confirmCredentials(email.getText(),new String(password.getPassword()));
     comp = (Component) e.getSource();
     f=(JFrame) SwingUtilities.getRoot(comp);
     JOptionPane jj = new JOptionPane();
-    if(dude == false) {
+    if(dude == 0) {
         jj.showMessageDialog(f,"Wrong credentials");
     }
-    else if(dude == true){
+    else if(dude == 1){
         jj.showMessageDialog(f,"Logged in!");
         
         Window mainWind = (Window) f;
         mainWind.setWindow(new patientGUI());
         }
+    else{
+        jj.showMessageDialog(f,"There is a connection error, please connect to the internet.");
+    }
     }
 
 
