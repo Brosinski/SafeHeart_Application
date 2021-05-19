@@ -45,14 +45,14 @@ public class doctorGUI extends JPanel {
         addRecommendationBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                JPanel recommendationPanel = new recommendationsGUI();
             }
         });
 
         addNoteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                JPanel notePanel = new noteGUI();
             }
         });
     }
