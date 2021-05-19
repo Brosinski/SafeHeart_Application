@@ -18,12 +18,12 @@
         </constraints>
         <properties/>
       </component>
-      <component id="cbd05" class="javax.swing.JLabel">
+      <component id="cbd05" class="javax.swing.JLabel" binding="exerciseLabel">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Recommended Exercise"/>
+          <text value="Exercise"/>
         </properties>
       </component>
       <component id="3755c" class="javax.swing.JTextArea" binding="dietTextArea">
@@ -34,12 +34,12 @@
         </constraints>
         <properties/>
       </component>
-      <component id="be48" class="javax.swing.JLabel">
+      <component id="be48" class="javax.swing.JLabel" binding="dietLabel">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Recommended Diet"/>
+          <text value="Diet"/>
         </properties>
       </component>
       <vspacer id="d15fe">
@@ -69,7 +69,7 @@
         </constraints>
         <properties>
           <font name="Arial Black" size="14"/>
-          <text value="Edit Recommended Exersice / Diet"/>
+          <text value="Recommended Exersice / Diet"/>
         </properties>
       </component>
       <vspacer id="69705">

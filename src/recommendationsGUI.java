@@ -10,8 +10,11 @@ public class recommendationsGUI extends JPanel {
     private JTextArea dietTextArea;
     private JButton saveDietBtn;
     private JButton saveExerciseBtn;
+    private JLabel exerciseLabel;
+    private JLabel dietLabel;
 
     public recommendationsGUI(){
+
         this.setLayout(new GridLayout(1,1));
         this.add(recomMainPanel);
 
