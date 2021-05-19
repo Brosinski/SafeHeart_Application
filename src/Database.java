@@ -79,7 +79,7 @@ public class Database {
         return val;
     }
 
-    public boolean registerPatient(String email, String password, String firstName, String familyName) {
+    public boolean registerPatient(String email, String password, String firstName, String familyName) {   //TURN INTO INT METHOD
         boolean val = true;
 
         if (createUser(email, password, firstName, familyName)) {
@@ -108,22 +108,22 @@ public class Database {
         return val;
     }
 
-    public boolean registerClinician(String email, String password, String firstName, String familyName, boolean isSpecialPrac) {
+    public boolean registerClinician(String email, String password, String firstName, String familyName, boolean isSpecialPrac) {    //ADD NUMBER FUNCTIONALITY
         boolean val = true;
         String type;
         if (createUser(email, password, firstName, familyName)) {
             int id = generateIDCode();
             if (isSpecialPrac) {
-                type = "GP";
-            } else {
                 type = "SP";
+            } else {
+                type = "GP";
             }
             if (!checkForID(id) == true) {
                 try {
                     statement = connect.createStatement();
 
 
-                    PreparedStatement preparedStatement = connect.prepareStatement("insert into Clinicianggggggggg (Clin_Email, Clin_ID, Clin_Type)" + "values(?,?,?)");
+                    PreparedStatement preparedStatement = connect.prepareStatement("insert into Clinician(Clin_Email, Clin_ID, Clin_Type)" + "values(?,?,?)");
                     preparedStatement.setString(1, email);
                     preparedStatement.setInt(2, id);
                     preparedStatement.setString(3, type);
@@ -249,7 +249,7 @@ public class Database {
             resultSet = statement
                     .executeQuery("select * from Patient where Pat_ID  = '" + id + "'");
             if (resultSet.next() == true) {
-                System.out.println("There were no results");
+                System.out.println("This code already exists");
                 return true;
             }
 
@@ -272,7 +272,7 @@ public class Database {
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println("Patient was already paired with clinician");
-            val = true;
+            val = false;
         }
         return val;
     }
@@ -346,7 +346,10 @@ public class Database {
         return val;
     }
 
-    public boolean setPatientNote(String noteContent, Date noteDate, int patID, int clinID) {
+    public boolean setPatientNote(String noteContent, int patID, int clinID) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        java.util.Date date = new java.util.Date();
+        java.sql.Date noteDate =new java.sql.Date(date.getTime());
         try {
             PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientNote(Pat_ID,Clin_ID,Note_Date,Note_Content" + "values(?,?,?,?)");
             preparedStatement.setInt(1, patID);
@@ -359,9 +362,26 @@ public class Database {
         return true;
     }
 
-    public boolean getPatientNote(String noteContent, Date noteDate, int patID, int clinID) {
-        return true;
+    public ArrayList<PatientNote> getPatientNote(String noteContent, Date noteDate, int patID, int clinID) {
+        ArrayList<PatientNote> array = new ArrayList<>();
+        try {
+
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from PatientNote where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
+            while(resultSet.next()) {
+
+                array.add(new PatientNote(resultSet.getString("Note_Content"),resultSet.getDate("Note_Date")));
+
+            }
+
+        }catch (SQLException e){
+            return null;
+        }
+        return array;
     }
+
+
 
 
     public boolean setRecommendation(String dietRec, String exerciseRec, int patID, int clinID,Date dateRec) {
@@ -369,13 +389,13 @@ public class Database {
 
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
             java.util.Date date = new java.util.Date();
-            java.sql.Date sqldate =new java.sql.Date(date.getTime());
+            java.sql.Date recDate =new java.sql.Date(date.getTime());
             PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date" + "values(?,?,?,?,?)");
             preparedStatement.setInt(1, patID);
             preparedStatement.setInt(2, clinID);
             preparedStatement.setString(3, exerciseRec);
             preparedStatement.setString(4, dietRec);
-            preparedStatement.setDate(5, sqldate);
+            preparedStatement.setDate(5, recDate);
         } catch (SQLException e) {
             return false;
         }
@@ -387,7 +407,7 @@ public class Database {
 
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from PatientInformation where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
+                    .executeQuery("select * from Recommendation where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
             while(resultSet.next()) {
 
                 array.add(new Recommendation(resultSet.getString("Rec_Exercise"),resultSet.getString("Rec_Diet"),resultSet.getDate("Rec_Date")));
