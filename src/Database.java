@@ -35,8 +35,8 @@ public class Database {
     }
 
 
-    public boolean confirmCredentials(String email, String pass) {
-        boolean val = true;
+    public int confirmCredentials(String email, String pass) {
+        int val = 0;
         try {
 
             statement = connect.createStatement();
@@ -44,7 +44,7 @@ public class Database {
                     .executeQuery("select * from User where User_Email = '" + email + "'");
             if (resultSet.next() == false) {
                 System.out.println("There were no results");
-                val = false;
+                val = 0;
             }
 
             //Hashes the passed in value
@@ -52,11 +52,11 @@ public class Database {
             resultSet.beforeFirst();
             while (resultSet.next()) {
                 String password = resultSet.getString("User_Password");
-                if (password.equals(pass)) {         //Returns true if password is correct
-                    val = true;
+                if (password.equals(pass)) {         //Returns 1 if password is correct
+                    val = 1;
 
-                } else if (!password.equals(pass)) {
-                    val = false;
+                } else if (!password.equals(pass)) { //Returns 0 if password is incorrect
+                    val = 0;
 
 
                     System.out.println(password);
@@ -67,10 +67,10 @@ public class Database {
             }
 
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("FAILED");
-            return false;
+            System.out.println("FAILED");           //Returns 2 if on connection error
+            return 2;
         }
         System.out.println("Successfully Established connection");
         return val;
@@ -313,11 +313,12 @@ public class Database {
             preparedStatement.execute();
         }
         catch (SQLException e) {
+            val= false;
         }
 
         return val;
     }
-    public boolean getPatientInformation(int id){
+    public boolean getPatientInformation(int id,Patient pat){
         boolean val=true;
         try {
 
@@ -329,14 +330,20 @@ public class Database {
                 val = false;
             }
             else{
-
-                //FILL PATIENT INFORMATION OBJECT WITH RESULTS
-
+                pat.setGender(resultSet.getString("Pat_Gender"));
+                pat.setAge(resultSet.getInt("Pat_Age"));
+                pat.setHsCRP(resultSet.getInt("Pat_hsCRCP"));
+                pat.setBloodPressure(resultSet.getInt("Pat_BP"));
+                pat.setTotalCholesterol(resultSet.getInt("Pat_TotalCholestorol"));
+                pat.setHDLCholesterol(resultSet.getInt("Pat_HDLCholestorol"));
+                pat.setSmoker(resultSet.getBoolean("Pat_Smokes"));
+                pat.setFamilyHistory(resultSet.getBoolean("Pat_FamilyHistory"));
+                pat.setDiabetes(resultSet.getBoolean("Pat_Diabetes"));
             }
 
         }
         catch (SQLException e){
-
+            val=false;
         }
         return val;
     }
