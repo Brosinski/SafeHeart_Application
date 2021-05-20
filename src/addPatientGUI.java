@@ -68,7 +68,7 @@ public class addPatientGUI extends JPanel {
                          db.setPatientInformation(patId, gender, text2, text3, text4, text5, text6, text7, checkbox1, checkbox2, checkbox3);
                     }
                     catch (NumberFormatException e) {
-
+                            System.out.println("broken");
                     }
 
 

@@ -325,6 +325,8 @@ public class Database {
             preparedStatement.setBoolean(11, family_history);
             preparedStatement.execute();
         } catch (SQLException e) {
+            System.out.println("MYSQL ERROR");
+            e.printStackTrace();
             val = false;
         }
 
@@ -358,15 +360,15 @@ public class Database {
 
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from PatientInformation where Pat_ID= " + id + "");
+                    .executeQuery("select * from PatientInformation where Pat_ID= "+ id + "");
             if (resultSet.next() == false) {
-                System.out.println("There were no results");
+                System.out.println("There were no results BUT WHY");
 
                 val = false;
             } else {
                 pat.setGender(resultSet.getString("Pat_Gender"));
                 pat.setAge(resultSet.getInt("Pat_Age"));
-                pat.setHsCRP(resultSet.getInt("Pat_hsCRCP"));
+                pat.setHsCRP(resultSet.getInt("Pat_hsCRP"));
                 pat.setBloodPressure(resultSet.getInt("Pat_BP"));
                 pat.setHbA1C(resultSet.getDouble("Pat_HbA1C"));
                 pat.setTotalCholesterol(resultSet.getInt("Pat_TotalCholestorol"));
@@ -379,6 +381,8 @@ public class Database {
             statement.close();
 
         } catch (SQLException e) {
+            System.out.println("THIS DID NOT WORK");
+            e.printStackTrace();
             val = false;
         }
         return val;
