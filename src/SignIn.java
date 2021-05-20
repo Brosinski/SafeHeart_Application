@@ -383,6 +383,7 @@ public class SignIn extends JPanel {
                 f =(JFrame) SwingUtilities.getRoot(comp);
 
                 if(e.getSource()==backButton) {
+                    db.closeConnection();
                     Window mainWind = (Window) f;
                     mainWind.setWindow(new SignIn());
 
@@ -453,6 +454,7 @@ public class SignIn extends JPanel {
                     }
                 else {
                     Window mainWind = (Window) f;
+                    db.closeConnection();
                     mainWind.setWindow(new patientGUI(pat));
                 }
 
@@ -462,6 +464,7 @@ public class SignIn extends JPanel {
                 Clinician clin =new Clinician();
                 db.getClinician(clinId,clin);
                 Window mainWind = (Window) f;
+                db.closeConnection();
                 mainWind.setWindow(new doctorGUI(clin));
             }
 
