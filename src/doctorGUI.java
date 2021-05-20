@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class doctorGUI extends JPanel {
     private JPanel dMainPanel;
+    private JPanel display;
     private JButton editPatientBtn;
     private JTextField patientCodeText;
     private JLabel jLabel2;

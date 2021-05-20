@@ -15,12 +15,17 @@ public class patientGUI extends JPanel {
     private JLabel riskScoreLabel;
     private JPanel patientPanel;
 
+
     //patientGUI
     public patientGUI(Patient p){
-
+        ReynoldsRiskScore risk = new ReynoldsRiskScore();
         this.setLayout(new GridLayout(1,1));
         this.add(pMainPanel);
         this.dID.setText(Integer.toString(p.getId()));
+        riskScoreValue.setText(Double.toString(risk.calulateRRS(p)));
+        patientPanel.setLayout(new GridLayout(1,1));
+
+        patientPanel.add(new viewPatientDetailsGUI("Your current vitals",p));
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

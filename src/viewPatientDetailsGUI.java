@@ -24,66 +24,38 @@ public class viewPatientDetailsGUI extends JPanel {
     private JRadioButton femaleRadioButton;
     private JRadioButton maleRadioButton;
     private JLabel detailsHeader;
-    private String gender;
+    private JLabel gender;
     boolean error ;
-    private JLabel jlabel1;
-    private JLabel jLabel2;
+    private JLabel genderLabel;
+    private JLabel ageLabel;
+    private JLabel age;
+    private JLabel totalCholestrol;
+    private JLabel HDL;
+    private JLabel bp;
+    private JLabel hbcrp;
+    private JLabel Hba1c;
+    private JLabel totCholLabel;
+    private JLabel hdlLabel;
+    private JLabel bpLabel;
+    private JLabel hbCRPLabel;
+    private JLabel HbA1CLabel;
+    private JLabel header;
+    private JPanel viewPatientMain;
+    private JPanel jp2;
 
-    public viewPatientDetailsGUI(String title, int patId){
+    public viewPatientDetailsGUI(String title,Patient p){
         boolean isFemale;
         this.setLayout(new GridLayout(1,1));
-        this.add(addPatientMainPanel);
-        detailsHeader.setText(title);
-        ButtonGroup butG=new ButtonGroup();
-        butG.add(maleRadioButton);
-        butG.add(femaleRadioButton);
-        Database db =new Database();
-        ErrorAvoidance err= new ErrorAvoidance();
-        saveBtn.addActionListener(new ActionListener() {
-                                      @Override
-                                      public void actionPerformed(ActionEvent actionEvent) {
-                                          error = true;
-                                          System.out.println("ITS WORKING");
-                                          if (maleRadioButton.isSelected()) {
-                                              gender = "Male";
-                                          } else if (femaleRadioButton.isSelected()) {
-                                              gender = "Female";
-                                          } else {
-                                              error = false;
-                                          }
-                                          int text2;
-                                          int text3;
-                                          int text4;
-                                          int text5;
-                                          int text6;
-                                          double text7;
-                                          boolean checkbox1;
-                                          boolean checkbox2;
-                                          boolean checkbox3;
-                                          try {
-                                              text2 = Integer.parseInt(textField2.getText());
-                                              text3 = Integer.parseInt(textField3.getText());
-                                              text4 = Integer.parseInt(textField4.getText());
-                                              text5 = Integer.parseInt(textField5.getText());
-                                              text6 = Integer.parseInt(textField6.getText());
-                                              text7 = Double.parseDouble(textField7.getText());
-                                              checkbox1 = patientHasDiabetesCheckBox.isSelected();
-                                              checkbox2 = patientSmokesCheckBox.isSelected();
-                                              checkbox3 = famHistoryCheckBox.isSelected();
-                                              db.setPatientInformation(patId, gender, text2, text3, text4, text5, text6, text7, checkbox1, checkbox2, checkbox3);
-                                          }
-                                          catch (NumberFormatException e) {
-                                              System.out.println("broken");
-                                          }
+        this.add(viewPatientMain);
+        header.setText(title);
+        genderLabel.setText(p.getGender());
+        bpLabel.setText(Integer.toString(p.getBloodPressure()));
+        totCholLabel.setText(Integer.toString(p.getCholesterol()));
+        hdlLabel.setText(Integer.toString(p.getHDLCholesterol()));
+        HbA1CLabel.setText(Double.toString((p.getHbA1C())));
+        hbCRPLabel.setText(Integer.toString(p.getHsCRP()));
+        ageLabel.setText(Integer.toString(p.getAge()));
 
-
-                                          System.out.println("IT ENTERED HRE");
-
-
-                                      }
-
-                                  }
-        );
 
     }
 }

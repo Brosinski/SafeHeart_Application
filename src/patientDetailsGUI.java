@@ -7,12 +7,14 @@ public class patientDetailsGUI extends JPanel {
     private JLabel genderLabel;
     private JLabel ageLabel;
     private JLabel patientNameLabel;
-    private JButton selectButton;
+    private JButton nextButton;
+    private JButton backButton;
 
-    public patientDetailsGUI() {
+    public patientDetailsGUI(Patient p) {
 
         this.setLayout(new GridLayout(1, 1));
         this.add(patientDetailsMainPanel);
+
 
     }
 

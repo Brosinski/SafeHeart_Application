@@ -305,32 +305,7 @@ public class Database {
         return array;
     }
 
-    public boolean updatePatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP, double HbA1C, boolean diabetes, boolean smokes, boolean family_history) {
-        boolean val = true;
-        try {
-            statement = connect.createStatement();
 
-
-            PreparedStatement preparedStatement = connect.prepareStatement("Update PatientInformation SET Pat_ID = ?,Pat_Gender,Pat_Age,Pat_TotalCholestorol,Pat_HDLCholestorol,Pat_BP,Pat_hsCRP,Pat_HbA1C,Pat_Diabetes,Pat_Smokes,Pat_FamilyHistory)" + "values(?,?,?,?,?,?,?,?,?,?,?)");
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, gender);
-            preparedStatement.setInt(3, age);
-            preparedStatement.setInt(4, totalcholestorol);
-            preparedStatement.setInt(5, hdlcholestorol);
-            preparedStatement.setInt(6, bloodpressure);
-            preparedStatement.setInt(7, hsCRP);
-            preparedStatement.setDouble(8, HbA1C);
-            preparedStatement.setBoolean(9, diabetes);
-            preparedStatement.setBoolean(10, smokes);
-            preparedStatement.setBoolean(11, family_history);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            System.out.println("MYSQL ERROR");
-            e.printStackTrace();
-            val = false;
-        }
-        return val;
-    }
 
 
     public boolean setPatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP,double HbA1C, boolean diabetes, boolean smokes, boolean family_history) {
@@ -354,8 +329,25 @@ public class Database {
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println("MYSQL ERROR");
-            e.printStackTrace();
-            val = false;
+            try{  PreparedStatement preparedStatement = connect.prepareStatement("Update PatientInformation SET Pat_ID = ?,Pat_Gender =?,Pat_Age=?,Pat_TotalCholestorol=?,Pat_HDLCholestorol=?,Pat_BP=?,Pat_hsCRP=?,Pat_HbA1C=?,Pat_Diabetes=?,Pat_Smokes=?,Pat_FamilyHistory=?)");
+                preparedStatement.setInt(1, id);
+                preparedStatement.setString(2, gender);
+                preparedStatement.setInt(3, age);
+                preparedStatement.setInt(4, totalcholestorol);
+                preparedStatement.setInt(5, hdlcholestorol);
+                preparedStatement.setInt(6, bloodpressure);
+                preparedStatement.setInt(7, hsCRP);
+                preparedStatement.setDouble(8, HbA1C);
+                preparedStatement.setBoolean(9, diabetes);
+                preparedStatement.setBoolean(10, smokes);
+                preparedStatement.setBoolean(11, family_history);
+                preparedStatement.execute();}
+            catch (SQLException f){
+                f.printStackTrace();
+                val = false;
+            }
+
+
         }
 
         return val;
@@ -475,6 +467,24 @@ public class Database {
             return false;
         }
         return true;
+    }
+    public boolean getPatientName(int patID,Patient p){
+        boolean val =true;
+        try{  statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select Pat_Email from Patient where Pat_ID= "+ patID + "");
+            String email = resultSet.getString("Pat_Email");
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select User_FirstName,User_FamilyName from User where User_Email= '"+ email + "'");
+            p.setFamilyName(resultSet.getString("User_FamilyName"));
+            p.setFirstName(resultSet.getString("User_FirstName"));
+        }
+        catch(SQLException e){
+            val = false;
+
+        }
+        return val;
     }
     public ArrayList<Recommendation> getRecommendation(String dietRec, String exerciseRec, int patID, int clinID) {   //Returns null on error
         ArrayList<Recommendation> array = new ArrayList<>();
