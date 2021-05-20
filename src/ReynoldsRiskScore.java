@@ -1,13 +1,14 @@
-public class ReynoldsRiskScore extends Patient{
+public class ReynoldsRiskScore {
     
     private String riskExplationsList[];
-    private Patient p = new Patient();
+    private Patient p ;
 
     public ReynoldsRiskScore(){
 
     }
 
-    public double CalulateRRS(boolean s, boolean d, boolean fam, double rrs, double percent){
+    public double CalulateRRS(boolean s, boolean d, boolean fam, double rrs, double percent,Patient p){
+        this.p=p;
        rrs = (0.07799 * p.getAge()) + (3.137 * Math.log(p.getBloodPressure())) 
            + (0.180 * Math.log(p.getHsCRP())) + (1.382 * Math.log(p.getCholesterol()))
            - (1.172 * Math.log(p.getHDLCholesterol()));

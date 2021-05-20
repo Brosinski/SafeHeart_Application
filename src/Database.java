@@ -286,12 +286,12 @@ public class Database {
         return val;
     }
 
-    public ArrayList<Integer> getPatientList(int id) {
+    public ArrayList<Integer> getPatientList(int clinId) {
         ArrayList<Integer> array = new ArrayList<>();
         try {
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from PatientClinician where Clin_ID  = '" + id + "'");
+                    .executeQuery("select * from PatientClinician where Clin_ID  = '" + clinId + "'");
             while (resultSet.next()) {
                 array.add(resultSet.getInt("Pat_ID"));
             }
