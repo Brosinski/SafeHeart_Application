@@ -16,6 +16,7 @@ public class doctorGUI extends JPanel {
     private JButton addNoteBtn;
     private JLabel dID;
     private JLabel dIDLabel;
+    private JPanel doctorPanel;
     private JScrollPane scrollPane;
     private Database db = new Database();
     private Component comp;

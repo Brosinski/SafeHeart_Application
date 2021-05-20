@@ -13,6 +13,7 @@ public class patientGUI extends JPanel {
     private JLabel dIDLabel;
     private JLabel newRiskScoreLabel;
     private JLabel riskScoreLabel;
+    private JPanel patientPanel;
 
     //patientGUI
     public patientGUI(Patient p){
