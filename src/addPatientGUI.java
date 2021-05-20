@@ -22,7 +22,8 @@ public class addPatientGUI extends JPanel {
     private JRadioButton femaleRadioButton;
     private JRadioButton maleRadioButton;
     private JLabel detailsHeader;
-
+    private String gender;
+    boolean error ;
     public addPatientGUI(String title, int patId){
         boolean isFemale;
         this.setLayout(new GridLayout(1,1));
@@ -31,29 +32,53 @@ public class addPatientGUI extends JPanel {
         ButtonGroup butG=new ButtonGroup();
         butG.add(maleRadioButton);
         butG.add(femaleRadioButton);
+        Database db =new Database();
+        ErrorAvoidance err= new ErrorAvoidance();
         saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                error = true;
+                    System.out.println("ITS WORKING");
+                    if (maleRadioButton.isSelected()) {
+                        gender = "Male";
+                    } else if (femaleRadioButton.isSelected()) {
+                        gender = "Female";
+                    } else {
+                        error = false;
+                    }
+                int text2;
+                int text3;
+                int text4;
+                int text5;
+                int text6;
+                double text7;
+                boolean checkbox1;
+                boolean checkbox2;
+                boolean checkbox3;
+                    try {
+                         text2 = Integer.parseInt(textField2.getText());
+                         text3 = Integer.parseInt(textField3.getText());
+                         text4 = Integer.parseInt(textField4.getText());
+                         text5 = Integer.parseInt(textField5.getText());
+                         text6 = Integer.parseInt(textField6.getText());
+                         text7 = Double.parseDouble(textField7.getText());
+                         checkbox1 = patientHasDiabetesCheckBox.isSelected();
+                         checkbox2 = patientSmokesCheckBox.isSelected();
+                         checkbox3 = famHistoryCheckBox.isSelected();
+                         db.setPatientInformation(patId, gender, text2, text3, text4, text5, text6, text7, checkbox1, checkbox2, checkbox3);
+                    }
+                    catch (NumberFormatException e) {
+                            System.out.println("broken");
+                    }
 
-                if(maleRadioButton.isSelected()) {
+
+                    System.out.println("IT ENTERED HRE");
+
+
                 }
-                else if(femaleRadioButton.isSelected()){
 
-                }
-                else{
-
-                }
-
-                int text2 = Integer.parseInt(textField2.getText());
-                int text3 = Integer.parseInt(textField3.getText());
-                int text4 = Integer.parseInt(textField4.getText());
-                double text5 = Integer.parseInt(textField5.getText());
-                int text6 = Integer.parseInt(textField6.getText());
-                double text7 = Double.parseDouble(textField7.getText());
-                boolean checkbox1 = patientHasDiabetesCheckBox.isSelected();
-                boolean checkbox2 = patientSmokesCheckBox.isSelected();
-                boolean checkbox3 = famHistoryCheckBox.isSelected();
             }
-        });
+        );
+
     }
 }

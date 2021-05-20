@@ -9,7 +9,7 @@ public class noteGUI extends JPanel{
     private JLabel noteHeader;
     private JButton saveNoteBtn;
 
-    public noteGUI(Clinician c){
+    public noteGUI(Clinician c,Patient p){
 
         this.setLayout(new GridLayout(1,1));
         this.add(noteMainPanel);

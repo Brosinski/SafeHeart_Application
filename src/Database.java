@@ -221,7 +221,7 @@ public class Database {
         String code = "";
         int intcode = 0;
         String c;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 7; i++) {
             if (i == 0) {
                 c = String.valueOf((int) (Math.random() * 11 + 1));
                 code = code + c;
@@ -305,6 +305,34 @@ public class Database {
         return array;
     }
 
+    public boolean updatePatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP, double HbA1C, boolean diabetes, boolean smokes, boolean family_history) {
+        boolean val = true;
+        try {
+            statement = connect.createStatement();
+
+
+            PreparedStatement preparedStatement = connect.prepareStatement("Update PatientInformation SET Pat_ID = ?,Pat_Gender,Pat_Age,Pat_TotalCholestorol,Pat_HDLCholestorol,Pat_BP,Pat_hsCRP,Pat_HbA1C,Pat_Diabetes,Pat_Smokes,Pat_FamilyHistory)" + "values(?,?,?,?,?,?,?,?,?,?,?)");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, gender);
+            preparedStatement.setInt(3, age);
+            preparedStatement.setInt(4, totalcholestorol);
+            preparedStatement.setInt(5, hdlcholestorol);
+            preparedStatement.setInt(6, bloodpressure);
+            preparedStatement.setInt(7, hsCRP);
+            preparedStatement.setDouble(8, HbA1C);
+            preparedStatement.setBoolean(9, diabetes);
+            preparedStatement.setBoolean(10, smokes);
+            preparedStatement.setBoolean(11, family_history);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            System.out.println("MYSQL ERROR");
+            e.printStackTrace();
+            val = false;
+        }
+        return val;
+    }
+
+
     public boolean setPatientInformation(int id, String gender, int age, int totalcholestorol, int hdlcholestorol, int bloodpressure, int hsCRP,double HbA1C, boolean diabetes, boolean smokes, boolean family_history) {
         boolean val = true;
         try {
@@ -325,6 +353,8 @@ public class Database {
             preparedStatement.setBoolean(11, family_history);
             preparedStatement.execute();
         } catch (SQLException e) {
+            System.out.println("MYSQL ERROR");
+            e.printStackTrace();
             val = false;
         }
 
@@ -347,7 +377,7 @@ public class Database {
             resultSet.close();
             statement.close();}
         catch (SQLException e){
-
+            e.printStackTrace();
         }
 
         return val;
@@ -358,14 +388,15 @@ public class Database {
 
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from PatientInformation where Pat_ID= " + id + "");
+                    .executeQuery("select * from PatientInformation where Pat_ID= "+ id + "");
             if (resultSet.next() == false) {
-                System.out.println("There were no results");
+                System.out.println("There were no results BUT WHY");
+
                 val = false;
             } else {
                 pat.setGender(resultSet.getString("Pat_Gender"));
                 pat.setAge(resultSet.getInt("Pat_Age"));
-                pat.setHsCRP(resultSet.getInt("Pat_hsCRCP"));
+                pat.setHsCRP(resultSet.getInt("Pat_hsCRP"));
                 pat.setBloodPressure(resultSet.getInt("Pat_BP"));
                 pat.setHbA1C(resultSet.getDouble("Pat_HbA1C"));
                 pat.setTotalCholesterol(resultSet.getInt("Pat_TotalCholestorol"));
@@ -378,6 +409,8 @@ public class Database {
             statement.close();
 
         } catch (SQLException e) {
+            System.out.println("THIS DID NOT WORK");
+            e.printStackTrace();
             val = false;
         }
         return val;
@@ -416,6 +449,7 @@ public class Database {
 
 
         }catch (SQLException e){
+            e.printStackTrace();
             return null;
         }
         return array;
@@ -437,6 +471,7 @@ public class Database {
             preparedStatement.setString(4, dietRec);
             preparedStatement.setDate(5, recDate);
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -457,6 +492,7 @@ public class Database {
             statement.close();
 
         }catch (SQLException e){
+            e.printStackTrace();
             return null;
         }
 
@@ -467,6 +503,7 @@ public class Database {
         connect.close();
     }
         catch (SQLException e) {
+            e.printStackTrace();
 
         }
     }
