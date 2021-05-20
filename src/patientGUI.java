@@ -7,7 +7,7 @@ public class patientGUI extends JPanel {
     private JPanel pMainPanel;
     private JScrollPane pScrollPane;
     private JButton calculateBtn;
-    private JButton viewNotesBtn;
+
     private JButton viewRecommendationsBtn;
     private JLabel riskScoreValue;
     private JLabel dID;
@@ -16,11 +16,11 @@ public class patientGUI extends JPanel {
     private JLabel riskScoreLabel;
 
     //patientGUI
-    public patientGUI(){
+    public patientGUI(Patient p){
 
         this.setLayout(new GridLayout(1,1));
         this.add(pMainPanel);
-
+        this.dID.setText(Integer.toString(p.getId()));
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -28,12 +28,6 @@ public class patientGUI extends JPanel {
             }
         });
 
-        viewNotesBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-            }
-        });
 
         viewRecommendationsBtn.addActionListener(new ActionListener() {
             @Override

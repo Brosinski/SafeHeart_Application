@@ -440,13 +440,21 @@ public class SignIn extends JPanel {
             jj.showMessageDialog(f,"Logged in!");
             int patId=db.getPatientID(loginEmail);
             int clinId=db.getClinicianID(loginEmail);
-            System.out.println(clinId);
+            ;
             System.out.println(patId);
             if(patId!=0){
-                if(!db.getPatientInformation(patId, pat)){
+                pat.setId(patId);
+                System.out.println("THIS IW ORKING NOW FMNFM");
+
+                if(db.getPatientInformation(patId, pat) ==false){
+                    System.out.println(!db.getPatientInformation(patId, pat));
                     Window mainWind = (Window) f;
                     mainWind.setWindow(new addPatientGUI("Please comlpete required information",patId));
                     }
+                else {
+                    Window mainWind = (Window) f;
+                    mainWind.setWindow(new patientGUI(pat));
+                }
 
                 }
 

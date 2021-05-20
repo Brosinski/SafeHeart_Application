@@ -221,7 +221,7 @@ public class Database {
         String code = "";
         int intcode = 0;
         String c;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 7; i++) {
             if (i == 0) {
                 c = String.valueOf((int) (Math.random() * 11 + 1));
                 code = code + c;
@@ -361,6 +361,7 @@ public class Database {
                     .executeQuery("select * from PatientInformation where Pat_ID= " + id + "");
             if (resultSet.next() == false) {
                 System.out.println("There were no results");
+
                 val = false;
             } else {
                 pat.setGender(resultSet.getString("Pat_Gender"));

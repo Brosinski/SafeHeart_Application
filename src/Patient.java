@@ -2,7 +2,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class Patient{
-
+    private int id;
     private int bloodPressure;
     private int totalCholesterol;
     private int HDLCholesterol;
@@ -123,5 +123,12 @@ public class Patient{
         msg = df.format(dateTime) + "\nNursing Notes: \n" + bloodPressure
                 + "\n" + totalCholesterol + "\n" + rrs + "\n" + smoker + "\n" + hsCRP +"\n"+HDLCholesterol;
         return msg;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
