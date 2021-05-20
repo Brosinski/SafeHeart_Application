@@ -11,7 +11,9 @@ public class Clinician{
         clinicianID = id;
         clinicianType = type;
     }
+    public Clinician(){
 
+    }
     public void setID(int id){
         this.clinicianID = id;
     }

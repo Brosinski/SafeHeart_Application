@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
@@ -58,6 +59,7 @@ public class SignIn extends JPanel {
     private JTextField familyName;
     Component comp;
     JFrame f;
+    Patient pat =new Patient();
 
     Database db = new Database();
     GridBagConstraints c= new GridBagConstraints();
@@ -249,33 +251,15 @@ public class SignIn extends JPanel {
 
 
     }
-public void signIn(AWTEvent e) {
 
-
-    int dude =db.confirmCredentials(email.getText(),new String(password.getPassword()));
-    comp = (Component) e.getSource();
-    f=(JFrame) SwingUtilities.getRoot(comp);
-    JOptionPane jj = new JOptionPane();
-    if(dude == 0) {
-        jj.showMessageDialog(f,"Wrong credentials");
-    }
-    else if(dude == 1){
-        jj.showMessageDialog(f,"Logged in!");
-        
-        Window mainWind = (Window) f;
-        mainWind.setWindow(new patientGUI());
-        }
-    else{
-        jj.showMessageDialog(f,"There is a connection error, please connect to the internet.");
-    }
-    }
 
 
 
     public void startRegScreen(){
         this.remove(titleLogo);
         this.remove(displayImage);
-
+        email.setText("");
+        password.setText("");
         titleRegister=new JPanel();
         titleRegister.setLayout(new GridLayout(2,1,0,10));
         titleRegister.setBackground(Color.white);
@@ -391,9 +375,9 @@ public void signIn(AWTEvent e) {
 
         titleRegister.add(loginReg);
 
-        ActionListener listener;
+        ActionListener listener2;
 
-        listener = new ActionListener(){
+        listener2 = new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 comp = (Component) e.getSource();
                 f =(JFrame) SwingUtilities.getRoot(comp);
@@ -403,29 +387,20 @@ public void signIn(AWTEvent e) {
                     mainWind.setWindow(new SignIn());
 
                 }
-                else if(e.getSource()==regButton) {
 
-                    String code1=JOptionPane.showInputDialog("Enter Code for Registration");
-                    if(code1.equals(code)) {
-                        //ENTER DATABASE METHOD FOR REGISTERING USER
+                else if(e.getSource()==createButton) {
+                        registerUser(e);
 
 
-                    }
-                    else {
-                        comp = (Component) e.getSource();
-                         f =(JFrame) SwingUtilities.getRoot(comp);
-                        JOptionPane.showMessageDialog(f,"Wrong credentials");
-
-                    }
                 }
 
-            }
 
 
 
-        };
-        createButton.addActionListener(listener);
-        backButton.addActionListener(listener);
+
+        }};
+        createButton.addActionListener(listener2);
+        backButton.addActionListener(listener2);
         keyListener2 = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -450,6 +425,85 @@ public void signIn(AWTEvent e) {
         this.repaint();
         this.setVisible(true);
     }
+    public void signIn(AWTEvent e) {
+        String loginEmail =email.getText();
+        String loginPassword = new String(password.getPassword());
+
+        int dude =db.confirmCredentials(loginEmail,loginPassword);
+        comp = (Component) e.getSource();
+        f=(JFrame) SwingUtilities.getRoot(comp);
+        JOptionPane jj = new JOptionPane();
+        if(dude == 0) {
+            jj.showMessageDialog(f,"Wrong credentials");
+        }
+        else if(dude == 1){
+            jj.showMessageDialog(f,"Logged in!");
+            int patId=db.getPatientID(loginEmail);
+            int clinId=db.getClinicianID(loginEmail);
+            System.out.println(clinId);
+            System.out.println(patId);
+            if(patId!=0){
+                if(!db.getPatientInformation(patId, pat)){
+                    Window mainWind = (Window) f;
+                    mainWind.setWindow(new addPatientGUI("Please comlpete required information",patId));
+                    }
+
+                }
+
+            else if(clinId!=0){
+                Clinician clin =new Clinician();
+                db.getClinician(clinId,clin);
+                Window mainWind = (Window) f;
+                mainWind.setWindow(new doctorGUI(clin));
+            }
+
+        }
+        else{
+            jj.showMessageDialog(f,"There is a connection error, please connect to the internet.");
+        }
     }
+    public void registerUser(AWTEvent e) {
+
+        comp = (Component) e.getSource();
+        f=(JFrame) SwingUtilities.getRoot(comp);
+        JOptionPane jj = new JOptionPane();
+        String famName =familyName.getText();
+        String firsName = firstName.getText();
+        String loginEmail =email.getText();
+        String loginPassword = new String(password.getPassword());
+
+        if (clinician.isSelected()) {
+
+
+            if(db.registerClinician(loginEmail,loginPassword,firsName,famName,true)){
+                jj.showMessageDialog(f,"Registered as clinician.");
+                Window mainWind = (Window) f;
+                mainWind.setWindow(new SignIn());
+            }
+            else{
+                jj.showMessageDialog(f,"Failed to register");
+
+            }
+
+        } else if (patient.isSelected()) {
+            if(db.registerPatient(loginEmail,loginPassword,firsName,famName)) {
+                jj.showMessageDialog(f, "Registered as patient.");
+                Window mainWind = (Window) f;
+
+                mainWind.setWindow(new addPatientGUI("Enter you're last recorded vitals",db.getPatientID(loginEmail)));
+
+            }
+            else{
+                jj.showMessageDialog(f,"Failed to register for unknown reason");
+                Window mainWind = (Window) f;
+
+            }
+
+        } else {
+
+            jj.showMessageDialog(f,"Please specify Clinician or Patient");
+        }
+    }
+}
 
 

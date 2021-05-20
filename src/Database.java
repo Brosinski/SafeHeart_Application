@@ -68,6 +68,8 @@ public class Database {
                 }
 
             }
+            resultSet.close();
+            statement.close();
 
 
         } catch (SQLException e) {
@@ -184,6 +186,8 @@ public class Database {
                 return val;
             }
             val = resultSet.getInt("Pat_ID");
+            resultSet.close();
+            statement.close();
 
         } catch (SQLException e) {
             System.out.println("Email doesn't exist in database");
@@ -204,6 +208,8 @@ public class Database {
                 return val;
             }
             val = resultSet.getInt("Clin_ID");
+            resultSet.close();
+            statement.close();
 
         } catch (SQLException e) {
             System.out.println("Email doesn't exist in database");
@@ -240,6 +246,9 @@ public class Database {
                 System.out.println("This already exists");
                 return true;
             }
+            resultSet.close();
+            statement.close();
+
 
         } catch (SQLException e) {
             System.out.println("Something went wrong");
@@ -286,6 +295,9 @@ public class Database {
             while (resultSet.next()) {
                 array.add(resultSet.getInt("Pat_ID"));
             }
+            resultSet.close();
+            statement.close();
+
 
         } catch (SQLException e) {
             System.out.println("There was an error retrieving the patient list");
@@ -318,14 +330,35 @@ public class Database {
 
         return val;
     }
+    public boolean getClinician(int id, Clinician c){
+        boolean val =true;
+        try {
 
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select * from Clinician where Clin_ID= " + id + "");
+            if (resultSet.next() == false) {
+                System.out.println("There were no results");
+                val = false;
+            } else {
+                c.setType(resultSet.getString("Clin_Type"));
+                c.setID(resultSet.getInt("Clin_ID"));
+            }
+            resultSet.close();
+            statement.close();}
+        catch (SQLException e){
+
+        }
+
+        return val;
+    }
     public boolean getPatientInformation(int id, Patient pat) {
         boolean val = true;
         try {
 
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from PatientInformation where Pat_ID= '" + id + "'");
+                    .executeQuery("select * from PatientInformation where Pat_ID= " + id + "");
             if (resultSet.next() == false) {
                 System.out.println("There were no results");
                 val = false;
@@ -341,6 +374,8 @@ public class Database {
                 pat.setFamilyHistory(resultSet.getBoolean("Pat_FamilyHistory"));
                 pat.setDiabetes(resultSet.getBoolean("Pat_Diabetes"));
             }
+            resultSet.close();
+            statement.close();
 
         } catch (SQLException e) {
             val = false;
@@ -370,12 +405,15 @@ public class Database {
 
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from PatientNote where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
+                    .executeQuery("select * from PatientNote where Pat_ID= " + patID + " AND Clin_ID ="+clinID+"");
             while(resultSet.next()) {
 
                 array.add(new PatientNote(resultSet.getString("Note_Content"),resultSet.getDate("Note_Date")));
 
             }
+            resultSet.close();
+            statement.close();
+
 
         }catch (SQLException e){
             return null;
@@ -409,17 +447,28 @@ public class Database {
 
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from Recommendation where Pat_ID= '" + patID + "' AND Clin_ID ='"+clinID+"'");
+                    .executeQuery("select * from Recommendation where Pat_ID= " + patID + " AND Clin_ID ="+clinID+"");
             while(resultSet.next()) {
 
                 array.add(new Recommendation(resultSet.getString("Rec_Exercise"),resultSet.getString("Rec_Diet"),resultSet.getDate("Rec_Date")));
 
             }
+            resultSet.close();
+            statement.close();
 
         }catch (SQLException e){
             return null;
         }
+
         return array;
+    }
+    public void closeConnection() {
+        try {
+        connect.close();
+    }
+        catch (SQLException e) {
+
+        }
     }
 }
 

@@ -9,7 +9,7 @@ public class noteGUI extends JPanel{
     private JLabel noteHeader;
     private JButton saveNoteBtn;
 
-    public noteGUI(){
+    public noteGUI(Clinician c){
 
         this.setLayout(new GridLayout(1,1));
         this.add(noteMainPanel);
@@ -18,7 +18,10 @@ public class noteGUI extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String noteText = noteTextArea.getText();
+                Database db = new Database();
             }
-        });
+
+        }
+        );
     }
 }

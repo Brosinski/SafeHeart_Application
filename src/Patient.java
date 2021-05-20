@@ -17,7 +17,9 @@ public class Patient{
 
 
     private boolean familyHistory;
+    public Patient(){
 
+    }
     public Patient(int cl, int bp, int rr, int hs){
 
         totalCholesterol= cl;

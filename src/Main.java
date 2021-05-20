@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        new Window().setWindow(new doctorGUI());
+
         window.setWindow(new SignIn());
         currentwindow = 'S';
 

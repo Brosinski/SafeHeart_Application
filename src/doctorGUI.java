@@ -16,11 +16,11 @@ public class doctorGUI extends JPanel {
     private JLabel dID;
     private JLabel dIDLabel;
 
-    public doctorGUI() {
+    public doctorGUI(Clinician clin) {
 
         this.setLayout(new GridLayout(1,1));
         this.add(dMainPanel);
-
+        dID.setText(Integer.toString(clin.getID()));
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -52,7 +52,7 @@ public class doctorGUI extends JPanel {
         addNoteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JPanel notePanel = new noteGUI();
+                JPanel notePanel = new noteGUI(clin);
             }
         });
     }

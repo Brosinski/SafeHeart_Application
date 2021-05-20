@@ -19,18 +19,31 @@ public class addPatientGUI extends JPanel {
     private JTextField textField6;
     private JTextField textField7;
     private JButton saveBtn;
+    private JRadioButton femaleRadioButton;
+    private JRadioButton maleRadioButton;
+    private JLabel detailsHeader;
 
-    public addPatientGUI(){
-
+    public addPatientGUI(String title, int patId){
+        boolean isFemale;
         this.setLayout(new GridLayout(1,1));
         this.add(addPatientMainPanel);
-
-
+        detailsHeader.setText(title);
+        ButtonGroup butG=new ButtonGroup();
+        butG.add(maleRadioButton);
+        butG.add(femaleRadioButton);
         saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                String text1 = textField1.getText();
+                if(maleRadioButton.isSelected()) {
+                }
+                else if(femaleRadioButton.isSelected()){
+
+                }
+                else{
+
+                }
+
                 int text2 = Integer.parseInt(textField2.getText());
                 int text3 = Integer.parseInt(textField3.getText());
                 int text4 = Integer.parseInt(textField4.getText());
