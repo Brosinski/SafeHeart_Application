@@ -10,7 +10,7 @@ public class addPatientGUI extends JPanel {
     private JPanel addPatientMainPanel;
     private JCheckBox patientHasDiabetesCheckBox;
     private JCheckBox patientSmokesCheckBox;
-    private JCheckBox motherFatherHeartAttackCheckBox;
+    private JCheckBox famHistoryCheckBox;
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
@@ -31,15 +31,15 @@ public class addPatientGUI extends JPanel {
             public void actionPerformed(ActionEvent actionEvent) {
 
                 String text1 = textField1.getText();
-                String text2 = textField2.getText();
-                String text3 = textField3.getText();
-                String text4 = textField4.getText();
-                String text5 = textField5.getText();
-                String text6 = textField6.getText();
-                String text7 = textField7.getText();
+                int text2 = Integer.parseInt(textField2.getText());
+                int text3 = Integer.parseInt(textField3.getText());
+                int text4 = Integer.parseInt(textField4.getText());
+                double text5 = Integer.parseInt(textField5.getText());
+                int text6 = Integer.parseInt(textField6.getText());
+                double text7 = Double.parseDouble(textField7.getText());
                 boolean checkbox1 = patientHasDiabetesCheckBox.isSelected();
                 boolean checkbox2 = patientSmokesCheckBox.isSelected();
-                boolean checkbox3 = motherFatherHeartAttackCheckBox.isSelected();
+                boolean checkbox3 = famHistoryCheckBox.isSelected();
             }
         });
     }
