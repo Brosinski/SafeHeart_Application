@@ -29,6 +29,7 @@ public class addPatientGUI extends JPanel {
         saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 String text1 = textField1.getText();
                 String text2 = textField2.getText();
                 String text3 = textField3.getText();

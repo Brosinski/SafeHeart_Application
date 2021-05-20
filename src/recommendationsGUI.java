@@ -14,6 +14,7 @@ public class recommendationsGUI extends JPanel {
     private JTextArea textArea1;
     private JTextArea textArea2;
 
+
     public recommendationsGUI(){
 
         this.setLayout(new GridLayout(1,1));
