@@ -22,7 +22,8 @@ public class addPatientGUI extends JPanel {
     private JRadioButton femaleRadioButton;
     private JRadioButton maleRadioButton;
     private JLabel detailsHeader;
-
+    private String gender;
+    boolean error ;
     public addPatientGUI(String title, int patId){
         boolean isFemale;
         this.setLayout(new GridLayout(1,1));
@@ -31,17 +32,21 @@ public class addPatientGUI extends JPanel {
         ButtonGroup butG=new ButtonGroup();
         butG.add(maleRadioButton);
         butG.add(femaleRadioButton);
+        Database db =new Database();
+
         saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                error=false;
+            while(!error)
                 if(maleRadioButton.isSelected()) {
+                    gender ="Male";
                 }
                 else if(femaleRadioButton.isSelected()){
-
+                    gender ="Female";
                 }
                 else{
-
+                    error =true;
                 }
 
                 int text2 = Integer.parseInt(textField2.getText());
@@ -53,7 +58,9 @@ public class addPatientGUI extends JPanel {
                 boolean checkbox1 = patientHasDiabetesCheckBox.isSelected();
                 boolean checkbox2 = patientSmokesCheckBox.isSelected();
                 boolean checkbox3 = famHistoryCheckBox.isSelected();
+
             }
+
         });
     }
 }
