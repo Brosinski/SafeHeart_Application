@@ -45,15 +45,31 @@ public class doctorGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Patient p = new Patient();
+                f=(JFrame) SwingUtilities.getRoot(comp);
+                JOptionPane jj = new JOptionPane();
                 try {
                     int patientCode = Integer.parseInt(patientCodeText.getText());
-                    if(db.getPatientInformation(patientCode));
+                    System.out.println(db.getPatientInformation(patientCode,p));
+                    if(db.getPatientInformation(patientCode,p)) {
+
+                        if(!db.pairPatient(patientCode,clin.getID())){
+                           jj.showMessageDialog(f,"You have already added this patient before.");
+                        }
+                        else {
+                            jj.showMessageDialog(f,"Added Patient!");
+                        }
+
+
+                    }
+                    else{
+                        comp = (Component) actionEvent.getSource();
+
+                        jj.showMessageDialog(f,"This patient is not in the database");
+                    }
                 }
                 catch(NumberFormatException e) {
                     e.printStackTrace();
-                    comp = (Component) actionEvent.getSource();
-                    f=(JFrame) SwingUtilities.getRoot(comp);
-                    JOptionPane jj = new JOptionPane();
+
                     jj.showMessageDialog(f,"This was not a number");
                 }
 
