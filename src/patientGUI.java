@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 public class patientGUI extends JPanel {
     private JPanel pMainPanel;
-    private JScrollPane pScrollPane;
     private JButton calculateBtn;
 
     private JButton viewRecommendationsBtn;
