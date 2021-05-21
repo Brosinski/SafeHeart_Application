@@ -22,7 +22,7 @@ public class noteGUI extends JPanel{
                 Database db = new Database();
                 Component comp = (Component) actionEvent.getSource();
                 JFrame f =(JFrame) SwingUtilities.getRoot(comp);
-                if(db.setPatientNote(noteText,c.getID(),p.getId())==false) {
+                if(db.setPatientNote(noteText,p.getId(),c.getID())==false) {
                     JOptionPane jj = new JOptionPane();
                     jj.showMessageDialog(f,"Note was too long");
                 }

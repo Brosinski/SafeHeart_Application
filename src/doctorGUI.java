@@ -138,7 +138,13 @@ public class doctorGUI extends JPanel {
                 //JPanel recommendationPanel = new recommendationsGUI();
             }
         });
-
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                noteFrame display = new noteFrame();
+                display.add(new Note(clin,currentPatient));
+            }
+        });
         addNoteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

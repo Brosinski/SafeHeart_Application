@@ -413,17 +413,20 @@ public class Database {
     }
 
     public boolean setPatientNote(String noteContent, int patID, int clinID) {
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+
         java.util.Date date = new java.util.Date();
         java.sql.Date noteDate =new java.sql.Date(date.getTime());
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientNote(Pat_ID,Clin_ID,Note_Date,Note_Content" + "values(?,?,?,?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into PatientNote(Pat_ID,Clin_ID,Note_Date,Note_Content)" + "values(?,?,?,?)");
             preparedStatement.setInt(1, patID);
             preparedStatement.setInt(2, clinID);
             preparedStatement.setDate(3, noteDate);
             preparedStatement.setString(4, noteContent);
+            preparedStatement.execute();
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
+
         }
         return true;
     }
@@ -438,6 +441,7 @@ public class Database {
             while(resultSet.next()) {
 
                 array.add(new PatientNote(resultSet.getString("Note_Content"),resultSet.getDate("Note_Date")));
+
 
             }
             resultSet.close();

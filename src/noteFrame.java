@@ -11,7 +11,7 @@ public class noteFrame extends JFrame {
         this.setLayout(new GridLayout(1,1));
         screenwidth = screenSize.getWidth();
         screenheight = screenSize.getHeight();
-        this.setBounds((int)screenwidth / 2 -125,(int)screenheight / 2 -150, 250,300);
+        this.setBounds((int)screenwidth / 2 -200,(int)screenheight / 2 -150, 400,300);
         this.setVisible(true);
     }
 }

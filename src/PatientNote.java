@@ -6,6 +6,7 @@ public class PatientNote {
 
     public PatientNote(String noteContent,Date noteDate) {
         this.noteContent = noteContent;
+        this.noteDate =noteDate;
     }
 
     public String getNoteContent() {

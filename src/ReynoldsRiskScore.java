@@ -38,6 +38,8 @@ public class ReynoldsRiskScore {
             HDLCholesterol=30;
         if(HDLCholesterol>150)
             HDLCholesterol=150;
+        if(age>40)
+            age =40;
 
        rrs = (0.07799 * p.getAge()) + (3.137 * Math.log(bloodPressure))
            + (0.180 * Math.log(hsCRP)) + (1.382 * Math.log(totalCholesterol))
@@ -84,8 +86,8 @@ public class ReynoldsRiskScore {
                rrs+= 0;
            }
 
-        percent = ((1-Math.pow(0.98634,(rrs-22.325)))*-100);
-        percent = ((1-Math.pow(0.98634,(rrs-22.325)))*-100);
+        percent = ((1-Math.pow(0.98634,(rrs-22.325)))*100);
+
 
 
         return percent; 

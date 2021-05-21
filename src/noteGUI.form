@@ -35,12 +35,16 @@
         </constraints>
         <properties>
           <horizontalScrollBarPolicy value="31"/>
+          <verticalScrollBarPolicy value="22"/>
         </properties>
         <border type="none"/>
         <children>
           <component id="cf03a" class="javax.swing.JTextArea" binding="noteTextArea">
             <constraints/>
-            <properties/>
+            <properties>
+              <lineWrap value="true"/>
+              <maximumSize width="100" height="2147483647"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
