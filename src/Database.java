@@ -458,18 +458,19 @@ public class Database {
 
 
 
-    public boolean setRecommendation(String dietRec, String exerciseRec, int patID, int clinID,Date dateRec) {
+    public boolean setRecommendation(String dietRec, String exerciseRec, int patID, int clinID) {
         try {
 
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
             java.util.Date date = new java.util.Date();
             java.sql.Date recDate =new java.sql.Date(date.getTime());
-            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date" + "values(?,?,?,?,?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date)" + "values(?,?,?,?,?)");
             preparedStatement.setInt(1, patID);
             preparedStatement.setInt(2, clinID);
             preparedStatement.setString(3, exerciseRec);
             preparedStatement.setString(4, dietRec);
             preparedStatement.setDate(5, recDate);
+            preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -506,13 +507,44 @@ public class Database {
         }
         return val;
     }
-    public ArrayList<Recommendation> getRecommendation(String dietRec, String exerciseRec, int patID, int clinID) {   //Returns null on error
+    public boolean getClinicianName(int clinID,Clinician c){
+        boolean val =true;
+        String email = "d";
+        try{  statement = connect.createStatement();
+
+            resultSet = statement
+                    .executeQuery("select * from Clinician where Clin_ID="+c.getID()+"");
+            if(resultSet.next()) {
+                email = resultSet.getString("Clin_Email");
+                c.setID(resultSet.getInt("Clin_ID"));
+            }
+            else {
+
+            }
+            statement = connect.createStatement();
+            resultSet = statement
+                    .executeQuery("select User_FirstName,User_FamilyName from User where User_Email= '"+ email + "'");
+            if(resultSet.next()) {
+                c.setFamilyName(resultSet.getString("User_FamilyName"));
+                c.setFirstName(resultSet.getString("User_FirstName"));
+
+            }
+
+        }
+        catch(SQLException e){
+            val = false;
+            e.printStackTrace();
+
+        }
+        return val;
+    }
+    public ArrayList<Recommendation> getRecommendation( int patID) {   //Returns null on error
         ArrayList<Recommendation> array = new ArrayList<>();
         try {
 
             statement = connect.createStatement();
             resultSet = statement
-                    .executeQuery("select * from Recommendation where Pat_ID= " + patID + " AND Clin_ID ="+clinID+"");
+                    .executeQuery("select * from Recommendation where Pat_ID= " + patID +"");
             while(resultSet.next()) {
 
                 array.add(new Recommendation(resultSet.getString("Rec_Exercise"),resultSet.getString("Rec_Diet"),resultSet.getDate("Rec_Date")));

@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
-public class Clinician{
+public class Clinician extends User{
 
     private int clinicianID;
     private ArrayList<Hospital> hList = new ArrayList<Hospital> ();
     private ArrayList<Patient> pList = new ArrayList<Patient> ();
+
     private String clinicianType;
 
     public Clinician(int id, String type){

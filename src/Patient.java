@@ -1,7 +1,7 @@
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class Patient{
+public class Patient extends User{
     private int id;
     private int bloodPressure;
     private int totalCholesterol;
@@ -13,8 +13,7 @@ public class Patient{
     private double HbA1C;
     private boolean smoker;
     private boolean diabetes;
-    private String familyName;
-    private String firstName;
+
 
 
     private boolean familyHistory;
@@ -121,20 +120,6 @@ public class Patient{
     }
     public int getId() {
         return id;
-    }
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getFamilyName() {
-        return familyName;
-    }
-
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
     }
     public void setId(int id) {
         this.id = id;

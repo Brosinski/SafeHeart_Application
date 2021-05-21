@@ -42,7 +42,8 @@ public class patientGUI extends JPanel {
         viewRecommendationsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                noteFrame display = new noteFrame();
+                display.add(new recommendationsPatientGUI(p));
             }
         });
 
