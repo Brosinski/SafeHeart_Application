@@ -100,6 +100,7 @@ public class doctorGUI extends JPanel {
                         else {
                             jj.showMessageDialog(f,"Added Patient!");
                             patientArray.add(p);
+                            refreshPatients();
                         }
 
 

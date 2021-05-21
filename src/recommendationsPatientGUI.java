@@ -18,14 +18,21 @@ public class recommendationsPatientGUI extends JPanel {
     private Recommendation currentRec;
     private int arrayIndex;
     public recommendationsPatientGUI(Patient pat) {
+        java.util.Date date = new java.util.Date();
+        java.sql.Date Date =new java.sql.Date(date.getTime());
+        currentRec=new Recommendation("Empty","Empty",Date);
         recArray = db.getRecommendation(pat.getId());
         this.setLayout(new GridLayout(1, 1));
         this.add(recomMainPanel);
         if (!(recArray == null)) {
-            currentRec = recArray.get(arrayIndex);
+            if(!(recArray.size()== 0)) {
+                currentRec = recArray.get(arrayIndex);
+            }
+
             changeDetails(currentRec);
-        } else if (recArray.size() == 0) {
-        } else {
+        }
+         else {
+            changeDetails(currentRec);
             textArea1.setText("Error connecting to database");
         }
         nextButton.addActionListener(new ActionListener() {
@@ -40,32 +47,35 @@ public class recommendationsPatientGUI extends JPanel {
                 noteTracker(false);
             }
         });
+        this.setVisible(true);
     }
 
         public void noteTracker(boolean next) {
-            if (next) {
-                if (!(arrayIndex == recArray.size() - 1)) {
-                    arrayIndex++;
-                    currentRec = recArray.get(arrayIndex);
-                    changeDetails(currentRec);
+            if (recArray.size()>0) {
+                if (next) {
+                    if (!(arrayIndex == recArray.size() - 1)) {
+                        arrayIndex++;
+                        currentRec = recArray.get(arrayIndex);
+                        changeDetails(currentRec);
 
 
-                }
-            } else {
-
-
-                if (arrayIndex == 0) {
+                    }
                 } else {
-                    arrayIndex--;
-                    currentRec = recArray.get(arrayIndex);
-                    changeDetails(currentRec);
+
+
+                    if (arrayIndex == 0) {
+                    } else {
+
+                        arrayIndex--;
+                        currentRec = recArray.get(arrayIndex);
+                        changeDetails(currentRec);
+
+                    }
+
 
                 }
-
-
             }
         }
-
     public void changeDetails(Recommendation rec){
         textArea1.setText(rec.getRecommendedExercise());
         textArea2.setText(rec.getRecommendedDiet());

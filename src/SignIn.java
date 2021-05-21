@@ -189,19 +189,8 @@ public class SignIn extends JPanel {
                     signIn(e);
                 }
                 else if(e.getSource()==regButton) {
+                    startRegScreen();
 
-                    String code1=JOptionPane.showInputDialog("Enter Code for Registration");
-                    if(code1.equals(code)) {
-                        startRegScreen();
-
-
-                    }
-                    else {
-                        Component comp = (Component) e.getSource();
-                        JFrame f =(JFrame) SwingUtilities.getRoot(comp);
-                        JOptionPane.showMessageDialog(f,"Wrong credentials");
-
-                    }
                     }
 
                 }

@@ -43,7 +43,9 @@ public class patientGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 noteFrame display = new noteFrame();
-                display.add(new recommendationsPatientGUI(p));
+                recommendationsPatientGUI rPG = new recommendationsPatientGUI(p);
+                display.add(rPG);
+                display.setVisible(true);
             }
         });
 

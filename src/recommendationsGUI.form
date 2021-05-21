@@ -45,7 +45,7 @@
         </constraints>
         <properties>
           <font name="Arial Black" size="14"/>
-          <text value="Recommended Exersice / Diet"/>
+          <text value="Recommended Diet from DR"/>
         </properties>
       </component>
       <vspacer id="69705">

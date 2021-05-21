@@ -43,7 +43,7 @@ public class addPatientGUI extends JPanel {
         butG.add(femaleRadioButton);
         Database db =new Database();
         Patient p= new Patient();
-        System.out.println("Hello" );
+
         if(db.getPatientInformation(patId,p)) {
             textField2.setText(Integer.toString(p.getAge()));
             textField3.setText(Integer.toString(p.getCholesterol()));
@@ -200,46 +200,6 @@ public class addPatientGUI extends JPanel {
                     Component comp = (Component) actionEvent.getSource();
                     JFrame f =(JFrame) SwingUtilities.getRoot(comp);
                     JOptionPane.showMessageDialog(f,"New RRS for patient is : \n"+"       "+df.format(reynoldsRiskScore.calulateRRS(pat)));
-                }
-                catch (NumberFormatException e) {
-                    Component comp = (Component) actionEvent.getSource();
-                    JFrame f =(JFrame) SwingUtilities.getRoot(comp);
-                    JOptionPane.showMessageDialog(f,"You have entered one or more values incorrectly");
-                }
-            }
-        });
-
-    }
-    public addPatientGUI(String title){
-        this.setLayout(new GridLayout(1,1));
-        this.add(addPatientMainPanel);
-        detailsHeader.setText(title);
-        saveBtn.setText("Calculate");
-        saveBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                int text2;
-                int text3;
-                int text4;
-                int text5;
-                int text6;
-                double text7;
-                boolean checkbox1;
-                boolean checkbox2;
-                boolean checkbox3;
-                try {
-                    text2 = Integer.parseInt(textField2.getText());
-                    text3 = Integer.parseInt(textField3.getText());
-                    text4 = Integer.parseInt(textField4.getText());
-                    text5 = Integer.parseInt(textField5.getText());
-                    text6 = Integer.parseInt(textField6.getText());
-                    text7 = Double.parseDouble(textField7.getText());
-                    checkbox1 = patientHasDiabetesCheckBox.isSelected();
-                    checkbox2 = patientSmokesCheckBox.isSelected();
-                    checkbox3 = famHistoryCheckBox.isSelected();
-                    Patient patient = new Patient();
-
-
                 }
                 catch (NumberFormatException e) {
                     Component comp = (Component) actionEvent.getSource();

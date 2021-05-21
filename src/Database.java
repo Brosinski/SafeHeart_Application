@@ -464,7 +464,7 @@ public class Database {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
             java.util.Date date = new java.util.Date();
             java.sql.Date recDate =new java.sql.Date(date.getTime());
-            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date)se" + "values(?,?,?,?,?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date)" + "values(?,?,?,?,?)");
             preparedStatement.setInt(1, patID);
             preparedStatement.setInt(2, clinID);
             preparedStatement.setString(3, exerciseRec);
@@ -497,6 +497,7 @@ public class Database {
             if(resultSet.next()) {
                 p.setFamilyName(resultSet.getString("User_FamilyName"));
                 p.setFirstName(resultSet.getString("User_FirstName"));
+                System.out.println(p.getFamilyName());
             }
 
         }
