@@ -43,25 +43,30 @@ public class addPatientGUI extends JPanel {
         butG.add(femaleRadioButton);
         Database db =new Database();
         Patient p= new Patient();
-        db.getPatientInformation(patId,p);
-        textField2.setText(Integer.toString(p.getAge()));
-        textField3.setText(Integer.toString(p.getCholesterol()));
-        textField4.setText(Integer.toString(p.getHDLCholesterol()));
-        textField5.setText(Integer.toString(p.getBloodPressure()));
-        textField6.setText(Integer.toString(p.getHsCRP()));
-        textField7.setText(Double.toString(p.getHbA1C()));
-        if(p.getGender().equals("Male")) {
-            maleRadioButton.setSelected(true);
+        System.out.println("Hello" );
+        if(db.getPatientInformation(patId,p)) {
+            textField2.setText(Integer.toString(p.getAge()));
+            textField3.setText(Integer.toString(p.getCholesterol()));
+            textField4.setText(Integer.toString(p.getHDLCholesterol()));
+            textField5.setText(Integer.toString(p.getBloodPressure()));
+            textField6.setText(Integer.toString(p.getHsCRP()));
+            textField7.setText(Double.toString(p.getHbA1C()));
+            p.getGender();
+            System.out.println("Hello again" );
+            if (p.getGender().equals("Male")) {
+                maleRadioButton.setSelected(true);
 
+            } else {
+                femaleRadioButton.setSelected(true);
+            }
+            if (p.isSmoker())
+                patientSmokesCheckBox.setSelected(true);
+            if (p.isDiabetes())
+                patientHasDiabetesCheckBox.setSelected(true);
         }
         else{
-            femaleRadioButton.setSelected(true);
-        }
-        if(p.isSmoker())
-            patientSmokesCheckBox.setSelected(true);
-        if(p.isDiabetes())
-            patientHasDiabetesCheckBox.setSelected(true);
 
+        }
         saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -93,7 +98,8 @@ public class addPatientGUI extends JPanel {
                          checkbox1 = patientHasDiabetesCheckBox.isSelected();
                          checkbox2 = patientSmokesCheckBox.isSelected();
                          checkbox3 = famHistoryCheckBox.isSelected();
-                         db.setPatientInformation(patId, gender, text2, text3, text4, text5, text6, text7, checkbox1, checkbox2, checkbox3);
+                         boolean success =db.setPatientInformation(patId, gender, text2, text3, text4, text5, text6, text7, checkbox1, checkbox2, checkbox3);
+                         System.out.println(success);
                          if(refreshFlag){
                              docGUI.refreshPatients();
                              refreshFlag=false;
@@ -101,6 +107,14 @@ public class addPatientGUI extends JPanel {
                              JFrame f =(JFrame) SwingUtilities.getRoot(comp);
                              db.closeConnection();
                              f.dispose();
+
+                         }
+                         else{
+                             Component comp = (Component) actionEvent.getSource();
+                             JFrame f =(JFrame) SwingUtilities.getRoot(comp);
+                             Window mainWind = (Window) f;
+                             JOptionPane.showMessageDialog(f,"You have entered safeheart");
+                             mainWind.setWindow(new SignIn());
 
                          }
                     }

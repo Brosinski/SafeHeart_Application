@@ -464,7 +464,7 @@ public class Database {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
             java.util.Date date = new java.util.Date();
             java.sql.Date recDate =new java.sql.Date(date.getTime());
-            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date)" + "values(?,?,?,?,?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into Recommendation(Pat_ID,Clin_ID,Rec_Exercise,Rec_Diet,Rec_Date)se" + "values(?,?,?,?,?)");
             preparedStatement.setInt(1, patID);
             preparedStatement.setInt(2, clinID);
             preparedStatement.setString(3, exerciseRec);
