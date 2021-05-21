@@ -64,7 +64,6 @@ public class SignIn extends JPanel {
     Database db = new Database();
     GridBagConstraints c= new GridBagConstraints();
     public SignIn() {
-        System.out.println("Working");
         this.setLayout(new GridLayout(1, 2, 0, 0));
         this.setBackground(Color.white);
         titleLogo=new JPanel();
@@ -442,10 +441,10 @@ public class SignIn extends JPanel {
             int patId=db.getPatientID(loginEmail);
             int clinId=db.getClinicianID(loginEmail);
 
-            System.out.println(patId);
+
             if(patId!=0){
                 pat.setId(patId);
-                System.out.println("THIS IW ORKING NOW FMNFM");
+
 
                 if(db.getPatientInformation(patId, pat) ==false){
                     System.out.println(db.getPatientInformation(patId, pat));

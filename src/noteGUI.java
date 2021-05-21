@@ -8,6 +8,7 @@ public class noteGUI extends JPanel{
     private JTextArea noteTextArea;
     private JLabel noteHeader;
     private JButton saveNoteBtn;
+    private JScrollPane scrollPane;
 
     public noteGUI(Clinician c,Patient p){
 
@@ -19,6 +20,18 @@ public class noteGUI extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 String noteText = noteTextArea.getText();
                 Database db = new Database();
+                Component comp = (Component) actionEvent.getSource();
+                JFrame f =(JFrame) SwingUtilities.getRoot(comp);
+                if(db.setPatientNote(noteText,c.getID(),p.getId())==false) {
+                    JOptionPane jj = new JOptionPane();
+                    jj.showMessageDialog(f,"Note was too long");
+                }
+                else{
+                    f.dispose();
+                    db.closeConnection();
+                    }
+
+
             }
 
         }

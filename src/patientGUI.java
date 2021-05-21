@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 public class patientGUI extends JPanel {
     private JPanel pMainPanel;
@@ -22,14 +23,18 @@ public class patientGUI extends JPanel {
         this.setLayout(new GridLayout(1,1));
         this.add(pMainPanel);
         this.dID.setText(Integer.toString(p.getId()));
-        riskScoreValue.setText(Double.toString(risk.calulateRRS(p)));
+        DecimalFormat df =new DecimalFormat("##.##");
+        riskScoreValue.setText(df.format(risk.calulateRRS(p)));
         patientPanel.setLayout(new GridLayout(1,1));
 
         patientPanel.add(new viewPatientDetailsGUI("Your current vitals",p));
         calculateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                JFrame display= new PatientFrame("RRS Calculator");
+                JPanel j = new addPatientGUI("Calculate RRS",p);
+                display.add(j);
+                display.setVisible(true);
             }
         });
 

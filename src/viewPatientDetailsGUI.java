@@ -42,6 +42,9 @@ public class viewPatientDetailsGUI extends JPanel {
     private JLabel header;
     private JPanel viewPatientMain;
     private JPanel jp2;
+    private JLabel smokeLabel;
+    private JLabel historyLabel;
+    private JLabel diabetesLabel;
 
     public viewPatientDetailsGUI(String title,Patient p){
         boolean isFemale;
@@ -55,8 +58,22 @@ public class viewPatientDetailsGUI extends JPanel {
         HbA1CLabel.setText(Double.toString((p.getHbA1C())));
         hbCRPLabel.setText(Integer.toString(p.getHsCRP()));
         ageLabel.setText(Integer.toString(p.getAge()));
+        smokeLabel.setText(Boolean.toString(p.isSmoker()));
+        historyLabel.setText(Boolean.toString(p.isFamilyHistory()));
+        diabetesLabel.setText(Boolean.toString(p.isDiabetes()));
 
-
+    }
+    public void changeDetails(Patient p){
+        genderLabel.setText(p.getGender());
+        bpLabel.setText(Integer.toString(p.getBloodPressure()));
+        totCholLabel.setText(Integer.toString(p.getCholesterol()));
+        hdlLabel.setText(Integer.toString(p.getHDLCholesterol()));
+        HbA1CLabel.setText(Double.toString((p.getHbA1C())));
+        hbCRPLabel.setText(Integer.toString(p.getHsCRP()));
+        ageLabel.setText(Integer.toString(p.getAge()));
+        smokeLabel.setText(Boolean.toString(p.isSmoker()));
+        historyLabel.setText(Boolean.toString(p.isFamilyHistory()));
+        diabetesLabel.setText(Boolean.toString(p.isDiabetes()));
     }
 }
 

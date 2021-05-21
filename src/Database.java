@@ -32,7 +32,7 @@ public class Database {
                     , "sql11409918", "ebpMf3ffjG");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("FAILED");
+
 
         }
     }
@@ -46,7 +46,7 @@ public class Database {
             resultSet = statement
                     .executeQuery("select * from User where User_Email = '" + email + "'");
             if (resultSet.next() == false) {
-                System.out.println("There were no results");
+
                 val = 0;
             }
 
@@ -62,8 +62,6 @@ public class Database {
                     val = 0;
 
 
-                    System.out.println(password);
-
 
                 }
 
@@ -74,7 +72,7 @@ public class Database {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("FAILED");           //Returns 2 if on connection error
+                     //Returns 2 if on connection error
             return 2;
         }
         System.out.println("Successfully Established connection");
@@ -166,7 +164,7 @@ public class Database {
             System.out.println("This user already exists in the database");
             return false;
         } catch (Exception e) {
-            System.out.println("An unknown error occured");
+
             e.printStackTrace();
             return false;
 
@@ -190,7 +188,7 @@ public class Database {
             statement.close();
 
         } catch (SQLException e) {
-            System.out.println("Email doesn't exist in database");
+           e.printStackTrace();
         }
         return val;
     }
@@ -212,10 +210,13 @@ public class Database {
             statement.close();
 
         } catch (SQLException e) {
-            System.out.println("Email doesn't exist in database");
+
+            e.printStackTrace();
         }
         return val;
     }
+
+
 
     public int generateIDCode() {
         String code = "";
@@ -236,6 +237,8 @@ public class Database {
         return intcode;
     }
 
+
+
     public boolean checkForID(int id) {
         boolean val = false;
         try {
@@ -251,19 +254,19 @@ public class Database {
 
 
         } catch (SQLException e) {
-            System.out.println("Something went wrong");
+            e.printStackTrace();
         }
         try {
             statement = connect.createStatement();
             resultSet = statement
                     .executeQuery("select * from Patient where Pat_ID  = '" + id + "'");
             if (resultSet.next() == true) {
-                System.out.println("This code already exists");
+
                 return true;
             }
 
         } catch (SQLException e) {
-            System.out.println("Something went wrong");
+
         }
 
         return val;
@@ -328,8 +331,8 @@ public class Database {
             preparedStatement.setBoolean(11, family_history);
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("MYSQL ERROR");
-            try{  PreparedStatement preparedStatement = connect.prepareStatement("Update PatientInformation SET Pat_ID = ?,Pat_Gender =?,Pat_Age=?,Pat_TotalCholestorol=?,Pat_HDLCholestorol=?,Pat_BP=?,Pat_hsCRP=?,Pat_HbA1C=?,Pat_Diabetes=?,Pat_Smokes=?,Pat_FamilyHistory=?)");
+
+            try{  PreparedStatement preparedStatement = connect.prepareStatement("Update PatientInformation SET Pat_ID = ?,Pat_Gender =?,Pat_Age=?,Pat_TotalCholestorol=?,Pat_HDLCholestorol=?,Pat_BP=?,Pat_hsCRP=?,Pat_HbA1C=?,Pat_Diabetes=?,Pat_Smokes=?,Pat_FamilyHistory=? WHERE Pat_ID ="+id+"");
                 preparedStatement.setInt(1, id);
                 preparedStatement.setString(2, gender);
                 preparedStatement.setInt(3, age);
@@ -360,7 +363,7 @@ public class Database {
             resultSet = statement
                     .executeQuery("select * from Clinician where Clin_ID= " + id + "");
             if (resultSet.next() == false) {
-                System.out.println("There were no results");
+
                 val = false;
             } else {
                 c.setType(resultSet.getString("Clin_Type"));
@@ -382,10 +385,11 @@ public class Database {
             resultSet = statement
                     .executeQuery("select * from PatientInformation where Pat_ID= "+ id + "");
             if (resultSet.next() == false) {
-                System.out.println("There were no results BUT WHY");
+
 
                 val = false;
             } else {
+                pat.setId(id);
                 pat.setGender(resultSet.getString("Pat_Gender"));
                 pat.setAge(resultSet.getInt("Pat_Age"));
                 pat.setHsCRP(resultSet.getInt("Pat_hsCRP"));
@@ -401,7 +405,7 @@ public class Database {
             statement.close();
 
         } catch (SQLException e) {
-            System.out.println("THIS DID NOT WORK");
+
             e.printStackTrace();
             val = false;
         }
@@ -424,7 +428,7 @@ public class Database {
         return true;
     }
 
-    public ArrayList<PatientNote> getPatientNote(String noteContent, Date noteDate, int patID, int clinID) {
+    public ArrayList<PatientNote> getPatientNote( int patID, int clinID) {
         ArrayList<PatientNote> array = new ArrayList<>();
         try {
 
@@ -470,18 +474,30 @@ public class Database {
     }
     public boolean getPatientName(int patID,Patient p){
         boolean val =true;
+        String email = "d";
         try{  statement = connect.createStatement();
+
             resultSet = statement
-                    .executeQuery("select Pat_Email from Patient where Pat_ID= "+ patID + "");
-            String email = resultSet.getString("Pat_Email");
+                    .executeQuery("select * from Patient where Pat_ID="+p.getId()+"");
+            if(resultSet.next()) {
+                email = resultSet.getString("Pat_Email");
+
+            }
+            else {
+
+            }
             statement = connect.createStatement();
             resultSet = statement
                     .executeQuery("select User_FirstName,User_FamilyName from User where User_Email= '"+ email + "'");
-            p.setFamilyName(resultSet.getString("User_FamilyName"));
-            p.setFirstName(resultSet.getString("User_FirstName"));
+            if(resultSet.next()) {
+                p.setFamilyName(resultSet.getString("User_FamilyName"));
+                p.setFirstName(resultSet.getString("User_FirstName"));
+            }
+
         }
         catch(SQLException e){
             val = false;
+            e.printStackTrace();
 
         }
         return val;

@@ -51,14 +51,8 @@ public class Patient{
         rrs = Math.round((a /(a+b)) / (c /(c+d)) * 100.0) / 100.0;
     }
 
-    public void isSmoker(char s){
-        if(s == 'Y'){
-            this.smoker = true;
-        }
-
-        else if(s == 'N'){
-            this.smoker = false;
-        }
+    public boolean isSmoker(){
+        return smoker;
     }
 
     public int getCholesterol(){
