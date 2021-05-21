@@ -514,7 +514,7 @@ public class Database {
         try{  statement = connect.createStatement();
 
             resultSet = statement
-                    .executeQuery("select * from Clinician where Clin_ID="+c.getID()+"");
+                    .executeQuery("select * from Clinician where Clin_ID="+clinID+"");
             if(resultSet.next()) {
                 email = resultSet.getString("Clin_Email");
                 c.setID(resultSet.getInt("Clin_ID"));
@@ -547,8 +547,9 @@ public class Database {
             resultSet = statement
                     .executeQuery("select * from Recommendation where Pat_ID= " + patID +"");
             while(resultSet.next()) {
-
-                array.add(new Recommendation(resultSet.getString("Rec_Exercise"),resultSet.getString("Rec_Diet"),resultSet.getDate("Rec_Date")));
+                Recommendation rec =new Recommendation(resultSet.getString("Rec_Exercise"),resultSet.getString("Rec_Diet"),resultSet.getDate("Rec_Date"));
+                rec.setClinId(resultSet.getInt("Clin_ID"));
+                array.add(rec);
 
             }
             resultSet.close();

@@ -77,8 +77,11 @@ public class recommendationsPatientGUI extends JPanel {
             }
         }
     public void changeDetails(Recommendation rec){
+        Clinician clini = new Clinician();
         textArea1.setText(rec.getRecommendedExercise());
         textArea2.setText(rec.getRecommendedDiet());
+        db.getClinicianName(rec.getClinId(),clini);
+        recomHeader.setText("Recommendations from Dr. "+clini.getFamilyName());
 
 
     }
